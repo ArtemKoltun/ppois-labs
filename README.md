@@ -25,7 +25,7 @@
 ```bash
 cd lab1
 pip install -e ".[dev]"
-pytest                                   # тесты с покрытием
-python main.py examples/turing/unary_increment.json
-python main.py examples/markov/unary_addition.json
-python main.py examples/turing/unary_increment.json -log
+pytest
+python main.py examples/turing_machine/unary_increment.json
+python main.py examples/markov_algorithms/unary_addition.json
+python main.py examples/turing_machine/unary_increment.json -log
