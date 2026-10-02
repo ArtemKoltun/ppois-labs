@@ -1,0 +1,58 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class Readable {
+  + from_stream(stream): Self
+  + from_string(text): Self
+}
+
+abstract class Writable {
+  + __str__(): str
+  + to_stream(stream): None
+}
+
+abstract class AbstractRule {
+  + matches(word): bool
+  + left: str
+  + right: str
+  + is_final: bool
+}
+
+class Substitution {
+  - _left: str
+  - _right: str
+  - _is_final: bool
+}
+
+class Word {
+  + symbols: str
+  + replace_first(left, right): Word
+  + is_empty(): bool
+}
+
+class Program {
+  + add_rule(rule): None
+  + remove_rule(index): None
+  + find(word): Substitution
+}
+
+class MarkovAlgorithm {
+  - _alphabet: Alphabet
+  - _program: Program
+  - _word: Word
+  + step(): bool
+  + run(max_steps, on_step): None
+  + reset(): None
+  + status: MachineStatus
+}
+
+Readable <|-- AbstractRule
+Readable <|-- Word
+Writable <|-- AbstractRule
+Writable <|-- Word
+AbstractRule <|-- Substitution
+MarkovAlgorithm --> Program
+MarkovAlgorithm --> Word
+Program o-- Substitution
+
+@enduml

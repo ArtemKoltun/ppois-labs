@@ -1,0 +1,88 @@
+
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class Readable {
+  + from_stream(stream): Self
+  + from_string(text): Self
+}
+
+abstract class Writable {
+  + __str__(): str
+  + to_stream(stream): None
+}
+
+class Alphabet {
+  + add(symbol): None
+  + remove(symbol): None
+}
+
+class Direction <<enum>> {
+  LEFT
+  RIGHT
+  STAY
+  + from_char(char): Direction
+}
+
+abstract class AbstractTape {
+  + read(position): str
+  + write(position, symbol): None
+  + blank: str
+}
+
+class UnboundedTape {
+  - _blank: str
+  - _cells: dict
+}
+
+class Head {
+  + position: int
+  + move(direction): None
+  + increment(): None
+  + decrement(): None
+  + reset(position): None
+}
+
+abstract class AbstractRule {
+  + matches(state, symbol): bool
+  + current_state: str
+  + read_symbol: str
+}
+
+class Transition {
+  + next_state: str
+  + write_symbol: str
+  + direction: Direction
+}
+
+class Program {
+  + add_rule(rule): None
+  + remove_rule(index): None
+  + find(state, symbol): Transition
+}
+
+class TuringMachine {
+  - _tape: UnboundedTape
+  - _head: Head
+  - _program: Program
+  - _state: str
+  + step(): bool
+  + run(max_steps, on_step): None
+  + reset(): None
+  + status: MachineStatus
+}
+
+Readable <|-- AbstractTape
+Readable <|-- AbstractRule
+Writable <|-- AbstractTape
+Writable <|-- AbstractRule
+AbstractTape <|-- UnboundedTape
+AbstractRule <|-- Transition
+Transition --> Direction
+UnboundedTape --> Alphabet
+TuringMachine --> UnboundedTape
+TuringMachine --> Head
+TuringMachine --> Program
+Program o-- Transition
+
+@enduml
