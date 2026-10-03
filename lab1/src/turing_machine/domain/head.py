@@ -13,7 +13,6 @@ from __future__ import annotations
 from common.constants import DEFAULT_HEAD_POSITION
 from turing_machine.domain.direction import Direction
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------

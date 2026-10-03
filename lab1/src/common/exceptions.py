@@ -12,7 +12,7 @@ class PPOISError(Exception):
     """Базовое исключение всех модулей проекта."""
 
 
-class StepLimitExceeded(PPOISError):
+class StepLimitExceededError(PPOISError):
     """Превышен лимит шагов интерпретации абстрактной машины.
 
     Attributes:

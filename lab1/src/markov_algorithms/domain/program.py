@@ -10,14 +10,12 @@ Module: markov_algorithms.domain.program
 
 from __future__ import annotations
 
-from collections.abc import Iterable
-from collections.abc import Iterator
+from collections.abc import Iterable, Iterator
 from typing import Self
 
 from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 from markov_algorithms.domain.substitution import Substitution
-
 
 # ---------------------------------------------------------------------------
 # Constants

@@ -11,7 +11,6 @@ Module: common.enums
 from common.enums.machine_status import MachineStatus
 from common.enums.menu_result import MenuResult
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

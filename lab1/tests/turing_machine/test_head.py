@@ -11,7 +11,6 @@ Module: tests.turing_machine.test_head
 from turing_machine.domain.direction import Direction
 from turing_machine.domain.head import Head
 
-
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------

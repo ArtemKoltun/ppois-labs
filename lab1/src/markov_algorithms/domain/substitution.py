@@ -14,7 +14,6 @@ from typing import Self
 
 from markov_algorithms.domain.abstract.rule import AbstractRule
 
-
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------

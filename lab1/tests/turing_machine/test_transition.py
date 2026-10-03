@@ -13,7 +13,6 @@ import pytest
 from turing_machine.domain.direction import Direction
 from turing_machine.domain.transition import Transition
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

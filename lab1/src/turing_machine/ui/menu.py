@@ -10,14 +10,11 @@ Module: turing_machine.ui.menu
 
 from __future__ import annotations
 
-from common.enums.menu_result import MenuResult
-from common.ui.menu import Menu
-from common.ui.menu import MenuItem
+from common.ui.menu import Menu, MenuItem
 from common.ui.prompts import ask_str
 from turing_machine.domain.direction import Direction
 from turing_machine.domain.machine import TuringMachine
 from turing_machine.domain.transition import Transition
-
 
 # ---------------------------------------------------------------------------
 # Constants

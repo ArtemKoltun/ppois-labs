@@ -10,7 +10,6 @@ Module: tests.common.enums.test_machine_status
 
 from common.enums.machine_status import MachineStatus
 
-
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------

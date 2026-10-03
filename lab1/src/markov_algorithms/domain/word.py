@@ -15,7 +15,6 @@ from typing import Self
 from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -71,7 +70,7 @@ class Word(Readable, Writable):
     # Public methods
     # -----------------------------------------------------------------------
 
-    def replace_first(self, left: str, right: str) -> "Word":
+    def replace_first(self, left: str, right: str) -> Word:
         """Заменить первое вхождение ``left`` на ``right``.
 
         Args:

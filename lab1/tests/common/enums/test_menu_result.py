@@ -10,7 +10,6 @@ Module: tests.common.enums.test_menu_result
 
 from common.enums.menu_result import MenuResult
 
-
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------

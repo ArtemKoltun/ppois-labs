@@ -10,19 +10,18 @@ Module: markov_algorithms.domain.algorithm
 
 from __future__ import annotations
 
-from typing import Self
 from collections.abc import Callable
+from typing import Self
 
 from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 from common.constants import DEFAULT_MAX_STEPS
 from common.domain.alphabet import Alphabet
 from common.enums.machine_status import MachineStatus
-from common.exceptions import StepLimitExceeded
+from common.exceptions import StepLimitExceededError
 from markov_algorithms.domain.program import Program
 from markov_algorithms.domain.substitution import Substitution
 from markov_algorithms.domain.word import Word
-
 
 # ---------------------------------------------------------------------------
 # Classes
@@ -202,7 +201,7 @@ class MarkovAlgorithm(Readable, Writable):
             Ничего не возвращает.
 
         Raises:
-            StepLimitExceeded: Если алгорифм не остановился за
+            StepLimitExceededError: Если алгорифм не остановился за
                 ``max_steps`` шагов.
         """
         for _ in range(max_steps):
@@ -212,7 +211,7 @@ class MarkovAlgorithm(Readable, Writable):
                 on_step(self)
             if not moved:
                 return
-        raise StepLimitExceeded(max_steps)
+        raise StepLimitExceededError(max_steps)
 
     def reset(self) -> None:
         """Вернуть алгорифм в начальное состояние.

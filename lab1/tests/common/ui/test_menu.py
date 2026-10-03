@@ -11,9 +11,7 @@ Module: tests.common.ui.test_menu
 import pytest
 
 from common.enums.menu_result import MenuResult
-from common.ui.menu import Menu
-from common.ui.menu import MenuItem
-
+from common.ui.menu import Menu, MenuItem
 
 # ---------------------------------------------------------------------------
 # Helpers

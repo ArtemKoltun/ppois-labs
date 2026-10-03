@@ -11,10 +11,9 @@ Module: tests.markov_algorithms.test_algorithm
 import pytest
 
 from common.enums.machine_status import MachineStatus
-from common.exceptions import StepLimitExceeded
+from common.exceptions import StepLimitExceededError
 from markov_algorithms.domain.algorithm import MarkovAlgorithm
 from markov_algorithms.domain.word import Word
-
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -151,7 +150,7 @@ class TestMarkovAlgorithm:
         algo: MarkovAlgorithm = MarkovAlgorithm.from_string(
             _LOOPING_JSON
         )
-        with pytest.raises(StepLimitExceeded):
+        with pytest.raises(StepLimitExceededError):
             algo.run(max_steps=50)
 
     def test_reset(self) -> None:

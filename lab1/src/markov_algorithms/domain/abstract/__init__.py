@@ -10,7 +10,6 @@ Module: markov_algorithms.domain.abstract
 
 from markov_algorithms.domain.abstract.rule import AbstractRule
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

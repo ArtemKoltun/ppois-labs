@@ -12,22 +12,18 @@ from __future__ import annotations
 
 import json
 from collections.abc import Callable
-from typing import Any
-from typing import Self
+from typing import Any, Self
 
 from common.abstract.readable import Readable
 from common.abstract.writable import Writable
-from common.constants import DEFAULT_BLANK
-from common.constants import DEFAULT_HEAD_POSITION
-from common.constants import DEFAULT_MAX_STEPS
+from common.constants import DEFAULT_BLANK, DEFAULT_HEAD_POSITION, DEFAULT_MAX_STEPS
 from common.domain.alphabet import Alphabet
 from common.enums.machine_status import MachineStatus
-from common.exceptions import StepLimitExceeded
+from common.exceptions import StepLimitExceededError
 from turing_machine.domain.head import Head
 from turing_machine.domain.program import Program
 from turing_machine.domain.transition import Transition
 from turing_machine.domain.unbounded_tape import UnboundedTape
-
 
 # ---------------------------------------------------------------------------
 # Classes
@@ -264,7 +260,7 @@ class TuringMachine(Readable, Writable):
             Ничего не возвращает.
 
         Raises:
-            StepLimitExceeded: Если машина не остановилась за
+            StepLimitExceededError: Если машина не остановилась за
                 ``max_steps`` шагов.
         """
         for _ in range(max_steps):
@@ -274,7 +270,7 @@ class TuringMachine(Readable, Writable):
                 on_step(self)
             if not moved:
                 return
-        raise StepLimitExceeded(max_steps)
+        raise StepLimitExceededError(max_steps)
 
     def reset(self) -> None:
         """Вернуть машину в начальное состояние.

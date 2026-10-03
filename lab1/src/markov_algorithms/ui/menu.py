@@ -10,13 +10,11 @@ Module: markov_algorithms.ui.menu
 
 from __future__ import annotations
 
-from common.ui.menu import Menu
-from common.ui.menu import MenuItem
+from common.ui.menu import Menu, MenuItem
 from common.ui.prompts import ask_str
 from markov_algorithms.domain.algorithm import MarkovAlgorithm
 from markov_algorithms.domain.substitution import Substitution
 from markov_algorithms.domain.word import Word
-
 
 # ---------------------------------------------------------------------------
 # Constants

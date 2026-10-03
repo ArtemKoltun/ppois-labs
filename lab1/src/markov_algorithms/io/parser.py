@@ -14,7 +14,6 @@ from pathlib import Path
 
 from markov_algorithms.domain.algorithm import MarkovAlgorithm
 
-
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------

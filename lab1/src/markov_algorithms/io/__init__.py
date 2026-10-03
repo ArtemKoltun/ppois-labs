@@ -8,9 +8,7 @@ Module: markov_algorithms.io
 # Imports
 # ---------------------------------------------------------------------------
 
-from markov_algorithms.io.parser import load_algorithm
-from markov_algorithms.io.parser import save_algorithm
-
+from markov_algorithms.io.parser import load_algorithm, save_algorithm
 
 # ---------------------------------------------------------------------------
 # Public API

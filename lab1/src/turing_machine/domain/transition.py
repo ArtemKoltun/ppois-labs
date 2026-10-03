@@ -16,7 +16,6 @@ from common.constants import SYMBOL_LENGTH
 from turing_machine.domain.abstract.rule import AbstractRule
 from turing_machine.domain.direction import Direction
 
-
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------

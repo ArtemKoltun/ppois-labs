@@ -11,9 +11,8 @@ Module: tests.turing_machine.test_machine
 import pytest
 
 from common.enums.machine_status import MachineStatus
-from common.exceptions import StepLimitExceeded
+from common.exceptions import StepLimitExceededError
 from turing_machine.domain.machine import TuringMachine
-
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -120,7 +119,7 @@ class TestTuringMachine:
     def test_run_step_limit_raises(self) -> None:
         """run падает на зацикленной машине."""
         machine: TuringMachine = TuringMachine.from_string(_LOOPING_JSON)
-        with pytest.raises(StepLimitExceeded):
+        with pytest.raises(StepLimitExceededError):
             machine.run(max_steps=50)
 
     def test_reset(self) -> None:

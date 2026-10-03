@@ -11,7 +11,6 @@ Module: turing_machine.domain.abstract
 from turing_machine.domain.abstract.rule import AbstractRule
 from turing_machine.domain.abstract.tape import AbstractTape
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

@@ -12,10 +12,8 @@ from __future__ import annotations
 
 from typing import Self
 
-from common.constants import DEFAULT_BLANK
-from common.constants import SYMBOL_LENGTH
+from common.constants import DEFAULT_BLANK, SYMBOL_LENGTH
 from turing_machine.domain.abstract.tape import AbstractTape
-
 
 # ---------------------------------------------------------------------------
 # Classes

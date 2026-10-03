@@ -16,7 +16,6 @@ from turing_machine.domain.program import Program
 from turing_machine.domain.transition import Transition
 from turing_machine.domain.unbounded_tape import UnboundedTape
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

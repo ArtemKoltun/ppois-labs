@@ -8,9 +8,7 @@ Module: turing_machine.io
 # Imports
 # ---------------------------------------------------------------------------
 
-from turing_machine.io.parser import load_machine
-from turing_machine.io.parser import save_machine
-
+from turing_machine.io.parser import load_machine, save_machine
 
 # ---------------------------------------------------------------------------
 # Public API

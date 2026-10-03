@@ -10,10 +10,7 @@ Module: tests.common.ui.test_prompts
 
 import pytest
 
-from common.ui.prompts import ask_int
-from common.ui.prompts import ask_str
-from common.ui.prompts import confirm
-
+from common.ui.prompts import ask_int, ask_str, confirm
 
 # ---------------------------------------------------------------------------
 # Helpers

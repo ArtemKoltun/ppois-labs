@@ -13,7 +13,6 @@ import pytest
 from markov_algorithms.domain.program import Program
 from markov_algorithms.domain.substitution import Substitution
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

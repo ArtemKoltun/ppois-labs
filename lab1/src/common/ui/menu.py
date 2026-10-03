@@ -10,13 +10,11 @@ Module: common.ui.menu
 
 from __future__ import annotations
 
-from collections.abc import Callable
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 
 from common.enums.menu_result import MenuResult
 from common.ui.prompts import ask_int
-
 
 # ---------------------------------------------------------------------------
 # Constants

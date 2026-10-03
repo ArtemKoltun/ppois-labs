@@ -8,14 +8,13 @@ Module: tests.turing_machine.test_parser
 # Imports
 # ---------------------------------------------------------------------------
 
+import json
 from pathlib import Path
 
 import pytest
 
 from turing_machine.domain.machine import TuringMachine
-from turing_machine.io.parser import load_machine
-from turing_machine.io.parser import save_machine
-
+from turing_machine.io.parser import load_machine, save_machine
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -79,7 +78,7 @@ class TestLoadMachine:
         """Некорректный JSON — исключение."""
         path: Path = tmp_path / "broken.json"
         path.write_text("not a json", encoding="utf-8")
-        with pytest.raises(Exception):
+        with pytest.raises(json.JSONDecodeError):
             load_machine(path)
 
     def test_loads_example_from_examples_dir(

@@ -14,7 +14,6 @@ from turing_machine.domain.direction import Direction
 from turing_machine.domain.program import Program
 from turing_machine.domain.transition import Transition
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

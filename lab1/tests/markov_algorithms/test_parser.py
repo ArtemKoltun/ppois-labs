@@ -8,14 +8,13 @@ Module: tests.markov_algorithms.test_parser
 # Imports
 # ---------------------------------------------------------------------------
 
+import json
 from pathlib import Path
 
 import pytest
 
 from markov_algorithms.domain.algorithm import MarkovAlgorithm
-from markov_algorithms.io.parser import load_algorithm
-from markov_algorithms.io.parser import save_algorithm
-
+from markov_algorithms.io.parser import load_algorithm, save_algorithm
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -71,7 +70,7 @@ class TestLoadAlgorithm:
         """Некорректный JSON — исключение."""
         path: Path = tmp_path / "broken.json"
         path.write_text("not a json", encoding="utf-8")
-        with pytest.raises(Exception):
+        with pytest.raises(json.JSONDecodeError):
             load_algorithm(path)
 
     def test_loads_example_from_examples_dir(

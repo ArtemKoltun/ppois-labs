@@ -12,7 +12,6 @@ from __future__ import annotations
 
 from enum import Enum
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -35,7 +34,7 @@ class Direction(Enum):
     # -----------------------------------------------------------------------
 
     @classmethod
-    def from_char(cls, char: str) -> "Direction":
+    def from_char(cls, char: str) -> Direction:
         """Вернуть направление по его однобуквенному обозначению.
 
         Args:

@@ -21,7 +21,6 @@ from markov_algorithms.ui.menu import build_menu as build_markov_menu
 from turing_machine.domain.machine import TuringMachine
 from turing_machine.ui.menu import build_menu as build_turing_menu
 
-
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------

@@ -14,7 +14,6 @@ from pathlib import Path
 
 from turing_machine.domain.machine import TuringMachine
 
-
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
