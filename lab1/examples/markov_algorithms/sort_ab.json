@@ -1,0 +1,7 @@
+{
+  "alphabet": ["a", "b"],
+  "initial_word": "aabbaa",
+  "rules": [
+    "ba -> ab"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "alphabet": ["_", "1", "+"],
+  "blank": "_",
+  "initial_tape": "111+11",
+  "initial_head": 0,
+  "initial_state": "q0",
+  "final_states": ["q_accept"],
+  "transitions": [
+    "q0 1 q0 1 R",
+    "q0 + q1 1 R",
+    "q1 1 q1 1 R",
+    "q1 _ q_accept _ S"
+  ]
+}
