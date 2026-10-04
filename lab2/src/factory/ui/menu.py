@@ -10,27 +10,18 @@ Module: factory.ui.menu
 
 from __future__ import annotations
 
-from common.domain.address import Address
 from common.domain.money import Money
 from common.enums.material_type import MaterialType
 from common.enums.part_type import PartType
-from common.ui.menu import Menu
-from common.ui.menu import MenuItem
-from common.ui.prompts import ask_float
-from common.ui.prompts import ask_int
-from common.ui.prompts import ask_str
+from common.ui.menu import Menu, MenuItem
+from common.ui.prompts import ask_float, ask_int, ask_str
 from factory.domain.management.department import Department
 from factory.domain.management.factory import Factory
 from factory.domain.materials.material import Material
-from factory.domain.materials.material_batch import MaterialBatch
-from factory.domain.materials.supplier import Supplier
 from factory.domain.parts.part import Part
 from factory.domain.parts.specification import Specification
 from factory.domain.personnel.employee import Employee
-from factory.domain.warehouse.warehouse import Warehouse
-from factory.domain.workshops.foundry_shop import FoundryShop
 from factory.domain.workshops.workshop import Workshop
-
 
 # ---------------------------------------------------------------------------
 # Public functions
@@ -123,13 +114,12 @@ def _add_employee(factory: Factory) -> None:
     Returns:
         Ничего не возвращает.
     """
+    department: Department = Department(name="Общий отдел")
     if factory.departments_count() == 0:
-        department: Department = Department(name="Общий отдел")
         factory.add_department(department)
     name: str = ask_str("ФИО: ")
     position: str = ask_str("Должность: ")
     salary: float = ask_float("Оклад: ")
-    department: Department = Department(name="Общий отдел")
     employee: Employee = Employee(
         name=name,
         position=position,
@@ -138,7 +128,7 @@ def _add_employee(factory: Factory) -> None:
         department=department,
     )
     department.add_employee()
-    print(f"Сотрудник «{name}» принят.")
+    print(f"Сотрудник «{employee.name}» принят.")
 
 
 def _add_material(factory: Factory) -> None:

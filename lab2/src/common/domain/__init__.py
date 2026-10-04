@@ -11,7 +11,6 @@ Module: common.domain
 from common.domain.address import Address
 from common.domain.money import Money
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

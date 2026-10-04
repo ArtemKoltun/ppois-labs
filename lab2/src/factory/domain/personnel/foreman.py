@@ -13,7 +13,6 @@ from __future__ import annotations
 from factory.domain.personnel.employee import Employee
 from factory.domain.workshops.workshop import Workshop
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------

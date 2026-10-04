@@ -12,8 +12,7 @@ from __future__ import annotations
 
 from common.abstract.readable import Readable
 from common.abstract.writable import Writable
-from common.exceptions.part_exceptions import InvalidSpecificationException
-
+from common.exceptions.part_exceptions import InvalidSpecificationError
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -56,14 +55,14 @@ class Specification(Readable, Writable):
             notes: Примечания.
 
         Raises:
-            InvalidSpecificationException: Если данные некорректны.
+            InvalidSpecificationError: Если данные некорректны.
         """
         if not part_name:
-            raise InvalidSpecificationException(
+            raise InvalidSpecificationError(
                 "имя детали не может быть пустым"
             )
         if tolerance <= 0:
-            raise InvalidSpecificationException(
+            raise InvalidSpecificationError(
                 "допуск должен быть положительным"
             )
         self._part_name: str = part_name
@@ -73,7 +72,7 @@ class Specification(Readable, Writable):
         self._notes: str = notes
 
     @classmethod
-    def _parse(cls, text: str) -> "Specification":
+    def _parse(cls, text: str) -> Specification:
         """Разобрать спецификацию из строки.
 
         Args:

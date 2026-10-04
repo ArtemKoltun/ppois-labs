@@ -14,7 +14,6 @@ from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 from factory.domain.personnel.employee import Employee
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -55,7 +54,7 @@ class WorkShift(Readable, Writable):
         self._employees: list[Employee] = []
 
     @classmethod
-    def _parse(cls, text: str) -> "WorkShift":
+    def _parse(cls, text: str) -> WorkShift:
         """Разобрать смену из строки.
 
         Args:

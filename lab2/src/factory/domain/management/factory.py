@@ -18,7 +18,6 @@ from factory.domain.orders.order import Order
 from factory.domain.warehouse.warehouse import Warehouse
 from factory.domain.workshops.workshop import Workshop
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -59,7 +58,7 @@ class Factory(Readable, Writable):
         self._orders: list[Order] = []
 
     @classmethod
-    def _parse(cls, text: str) -> "Factory":
+    def _parse(cls, text: str) -> Factory:
         """Разобрать завод из строки.
 
         Args:

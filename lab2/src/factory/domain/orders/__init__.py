@@ -15,7 +15,6 @@ from factory.domain.orders.order import Order
 from factory.domain.orders.payment import Payment
 from factory.domain.orders.production_plan import ProductionPlan
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

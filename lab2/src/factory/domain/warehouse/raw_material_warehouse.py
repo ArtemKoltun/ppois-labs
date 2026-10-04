@@ -13,7 +13,6 @@ from __future__ import annotations
 from factory.domain.materials.material import Material
 from factory.domain.warehouse.warehouse import Warehouse
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------

@@ -8,20 +8,19 @@ Module: common.exceptions.part_exceptions
 # Imports
 # ---------------------------------------------------------------------------
 
-from common.exceptions.base import FactoryException
-
+from common.exceptions.base import FactoryError
 
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
 
-class InvalidPartException(FactoryException):
+class InvalidPartError(FactoryError):
     """Некорректные данные детали."""
 
 
-class InvalidSpecificationException(FactoryException):
+class InvalidSpecificationError(FactoryError):
     """Некорректная спецификация детали."""
 
 
-class QualityControlFailedException(FactoryException):
+class QualityControlFailedError(FactoryError):
     """Деталь не прошла контроль качества."""

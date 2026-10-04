@@ -15,7 +15,6 @@ from common.abstract.writable import Writable
 from common.domain.money import Money
 from factory.domain.orders.invoice import Invoice
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -51,7 +50,7 @@ class Payment(Readable, Writable):
         self._method: str = method
 
     @classmethod
-    def _parse(cls, text: str) -> "Payment":
+    def _parse(cls, text: str) -> Payment:
         """Разобрать платёж из строки.
 
         Args:

@@ -15,7 +15,6 @@ from common.abstract.writable import Writable
 from common.domain.address import Address
 from factory.domain.personnel.employee import Employee
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -65,7 +64,7 @@ class Warehouse(Readable, Writable):
         self._current_load: float = 0.0
 
     @classmethod
-    def _parse(cls, text: str) -> "Warehouse":
+    def _parse(cls, text: str) -> Warehouse:
         """Разобрать склад из строки.
 
         Args:

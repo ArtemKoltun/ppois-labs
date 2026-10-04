@@ -12,7 +12,6 @@ from __future__ import annotations
 
 from factory.domain.workshops.workshop import Workshop
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------

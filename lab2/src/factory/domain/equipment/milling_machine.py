@@ -12,7 +12,6 @@ from __future__ import annotations
 
 from factory.domain.equipment.machine import Machine
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------

@@ -13,11 +13,10 @@ from __future__ import annotations
 from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 from common.exceptions.material_exceptions import (
-    InsufficientMaterialException,
+    InsufficientMaterialError,
 )
 from factory.domain.materials.material import Material
 from factory.domain.materials.supplier import Supplier
-
 
 # ---------------------------------------------------------------------------
 # Classes
@@ -54,7 +53,7 @@ class MaterialBatch(Readable, Writable):
         self._batch_number: str = batch_number
 
     @classmethod
-    def _parse(cls, text: str) -> "MaterialBatch":
+    def _parse(cls, text: str) -> MaterialBatch:
         """Разобрать партию из строки.
 
         Args:
@@ -110,10 +109,10 @@ class MaterialBatch(Readable, Writable):
             Ничего не возвращает.
 
         Raises:
-            InsufficientMaterialException: Если не хватает материала.
+            InsufficientMaterialError: Если не хватает материала.
         """
         if amount > self._quantity:
-            raise InsufficientMaterialException(
+            raise InsufficientMaterialError(
                 f"недостаточно материала: нужно {amount}, "
                 f"есть {self._quantity}"
             )

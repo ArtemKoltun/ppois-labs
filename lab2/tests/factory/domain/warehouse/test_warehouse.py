@@ -14,7 +14,6 @@ from common.domain.address import Address
 from factory.domain.personnel.employee import Employee
 from factory.domain.warehouse.warehouse import Warehouse
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

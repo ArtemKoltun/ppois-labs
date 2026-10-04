@@ -15,7 +15,6 @@ from factory.domain.materials.plastic import Plastic
 from factory.domain.materials.steel import Steel
 from factory.domain.materials.supplier import Supplier
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

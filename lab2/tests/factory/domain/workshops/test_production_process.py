@@ -14,7 +14,6 @@ from factory.domain.workshops.production_process import (
 )
 from factory.domain.workshops.workshop import Workshop
 
-
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------

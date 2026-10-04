@@ -11,37 +11,36 @@ Module: tests.common.exceptions.test_exceptions
 import pytest
 
 from common.exceptions import (
-    EmployeeNotAvailableException,
-    EquipmentBrokenException,
-    EquipmentNotAvailableException,
-    FactoryException,
-    InsufficientMaterialException,
-    InvalidMaterialException,
-    InvalidOrderException,
-    InvalidPartException,
-    InvalidSpecificationException,
-    OrderNotFoundException,
-    ProductionDeadlineMissedException,
-    QualityControlFailedException,
+    EmployeeNotAvailableError,
+    EquipmentBrokenError,
+    EquipmentNotAvailableError,
+    FactoryError,
+    InsufficientMaterialError,
+    InvalidMaterialError,
+    InvalidOrderError,
+    InvalidPartError,
+    InvalidSpecificationError,
+    OrderNotFoundError,
+    ProductionDeadlineMissedError,
+    QualityControlFailedError,
 )
-
 
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
 
-_ALL_EXCEPTIONS: list[type[FactoryException]] = [
-    EmployeeNotAvailableException,
-    EquipmentBrokenException,
-    EquipmentNotAvailableException,
-    InsufficientMaterialException,
-    InvalidMaterialException,
-    InvalidOrderException,
-    InvalidPartException,
-    InvalidSpecificationException,
-    OrderNotFoundException,
-    ProductionDeadlineMissedException,
-    QualityControlFailedException,
+_ALL_EXCEPTIONS: list[type[FactoryError]] = [
+    EmployeeNotAvailableError,
+    EquipmentBrokenError,
+    EquipmentNotAvailableError,
+    InsufficientMaterialError,
+    InvalidMaterialError,
+    InvalidOrderError,
+    InvalidPartError,
+    InvalidSpecificationError,
+    OrderNotFoundError,
+    ProductionDeadlineMissedError,
+    QualityControlFailedError,
 ]
 """Все конкретные исключения проекта."""
 
@@ -50,16 +49,16 @@ _ALL_EXCEPTIONS: list[type[FactoryException]] = [
 # Tests
 # ---------------------------------------------------------------------------
 
-class TestFactoryException:
+class TestFactoryError:
     """Проверки базового исключения."""
 
     def test_inherits_exception(self) -> None:
-        """FactoryException наследуется от Exception."""
-        assert issubclass(FactoryException, Exception)
+        """FactoryError наследуется от Exception."""
+        assert issubclass(FactoryError, Exception)
 
     def test_message(self) -> None:
         """Сообщение сохраняется в поле message."""
-        exc: FactoryException = FactoryException("что-то пошло не так")
+        exc: FactoryError = FactoryError("что-то пошло не так")
         assert exc.message == "что-то пошло не так"
         assert str(exc) == "что-то пошло не так"
 
@@ -70,19 +69,19 @@ class TestConcreteExceptions:
     @pytest.mark.parametrize("exc_class", _ALL_EXCEPTIONS)
     def test_inherits_factory(
         self,
-        exc_class: type[FactoryException],
+        exc_class: type[FactoryError],
     ) -> None:
-        """Каждое исключение наследуется от FactoryException.
+        """Каждое исключение наследуется от FactoryError.
 
         Args:
             exc_class: Класс исключения.
         """
-        assert issubclass(exc_class, FactoryException)
+        assert issubclass(exc_class, FactoryError)
 
     @pytest.mark.parametrize("exc_class", _ALL_EXCEPTIONS)
     def test_raises_with_message(
         self,
-        exc_class: type[FactoryException],
+        exc_class: type[FactoryError],
     ) -> None:
         """Каждое исключение можно поднять с сообщением.
 

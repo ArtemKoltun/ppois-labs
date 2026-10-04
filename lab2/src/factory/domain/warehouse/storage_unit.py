@@ -13,7 +13,6 @@ from __future__ import annotations
 from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -56,7 +55,7 @@ class StorageUnit(Readable, Writable):
         self._current_weight: float = current_weight
 
     @classmethod
-    def _parse(cls, text: str) -> "StorageUnit":
+    def _parse(cls, text: str) -> StorageUnit:
         """Разобрать единицу из строки.
 
         Args:

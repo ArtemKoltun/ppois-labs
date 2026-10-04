@@ -15,7 +15,6 @@ from factory.domain.warehouse.raw_material_warehouse import (
 )
 from factory.domain.warehouse.warehouse import Warehouse
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

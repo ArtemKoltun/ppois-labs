@@ -16,7 +16,6 @@ from factory.domain.parts.piston import Piston
 from factory.domain.parts.shaft import Shaft
 from factory.domain.parts.specification import Specification
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

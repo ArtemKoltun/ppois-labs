@@ -10,12 +10,11 @@ Module: tests.factory.domain.workshops.test_quality_inspection
 
 import pytest
 
-from common.exceptions import QualityControlFailedException
+from common.exceptions import QualityControlFailedError
 from factory.domain.parts.part import Part
 from factory.domain.workshops.quality_inspection import (
     QualityInspection,
 )
-
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -126,7 +125,7 @@ class TestQualityInspection:
         """
         ins: QualityInspection = _make_inspection(piston_part, batch=100)
         ins.record_pass(50)
-        with pytest.raises(QualityControlFailedException):
+        with pytest.raises(QualityControlFailedError):
             ins.raise_if_failed()
 
     def test_raise_if_failed_ok(self, piston_part: Part) -> None:

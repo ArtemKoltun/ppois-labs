@@ -13,7 +13,6 @@ from __future__ import annotations
 from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -48,7 +47,7 @@ class Department(Readable, Writable):
         self._employee_count: int = 0
 
     @classmethod
-    def _parse(cls, text: str) -> "Department":
+    def _parse(cls, text: str) -> Department:
         """Разобрать отдел из строки.
 
         Args:

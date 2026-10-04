@@ -11,7 +11,6 @@ Module: tests.factory.domain.equipment.test_milling_machine
 from factory.domain.equipment.machine import Machine
 from factory.domain.equipment.milling_machine import MillingMachine
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

@@ -13,7 +13,6 @@ import pytest
 from factory.domain.personnel.employee import Employee
 from factory.domain.personnel.work_shift import WorkShift
 
-
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------

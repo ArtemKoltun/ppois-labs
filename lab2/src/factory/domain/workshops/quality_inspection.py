@@ -13,10 +13,9 @@ from __future__ import annotations
 from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 from common.exceptions.part_exceptions import (
-    QualityControlFailedException,
+    QualityControlFailedError,
 )
 from factory.domain.parts.part import Part
-
 
 # ---------------------------------------------------------------------------
 # Constants
@@ -68,7 +67,7 @@ class QualityInspection(Readable, Writable):
         self._date: str = date
 
     @classmethod
-    def _parse(cls, text: str) -> "QualityInspection":
+    def _parse(cls, text: str) -> QualityInspection:
         """Разобрать проверку из строки.
 
         Args:
@@ -140,10 +139,10 @@ class QualityInspection(Readable, Writable):
             Ничего не возвращает.
 
         Raises:
-            QualityControlFailedException: Если доля годных ниже порога.
+            QualityControlFailedError: Если доля годных ниже порога.
         """
         if not self.is_successful():
-            raise QualityControlFailedException(
+            raise QualityControlFailedError(
                 f"партия {self._part.name} не прошла ОТК: "
                 f"годных {self.pass_rate():.0%}"
             )

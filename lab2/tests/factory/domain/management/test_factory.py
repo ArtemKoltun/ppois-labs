@@ -17,7 +17,6 @@ from factory.domain.orders.order import Order
 from factory.domain.warehouse.warehouse import Warehouse
 from factory.domain.workshops.workshop import Workshop
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

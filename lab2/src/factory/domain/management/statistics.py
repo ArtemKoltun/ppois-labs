@@ -15,7 +15,6 @@ from common.abstract.writable import Writable
 from factory.domain.orders.order import Order
 from factory.domain.workshops.production_order import ProductionOrder
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -47,7 +46,7 @@ class Statistics(Readable, Writable):
         self._defects_count: int = defects_count
 
     @classmethod
-    def _parse(cls, text: str) -> "Statistics":
+    def _parse(cls, text: str) -> Statistics:
         """Разобрать статистику из строки.
 
         Args:

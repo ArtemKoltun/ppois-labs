@@ -14,10 +14,9 @@ from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 from common.domain.money import Money
 from common.enums.order_status import OrderStatus
-from common.exceptions.order_exceptions import InvalidOrderException
+from common.exceptions.order_exceptions import InvalidOrderError
 from factory.domain.orders.customer import Customer
 from factory.domain.parts.part import Part
-
 
 # ---------------------------------------------------------------------------
 # Classes
@@ -60,12 +59,12 @@ class Order(Readable, Writable):
             created_date: Дата создания.
 
         Raises:
-            InvalidOrderException: Если данные некорректны.
+            InvalidOrderError: Если данные некорректны.
         """
         if not number:
-            raise InvalidOrderException("номер не может быть пустым")
+            raise InvalidOrderError("номер не может быть пустым")
         if quantity <= 0:
-            raise InvalidOrderException(
+            raise InvalidOrderError(
                 "количество должно быть положительным"
             )
         self._number: str = number
@@ -79,7 +78,7 @@ class Order(Readable, Writable):
         self._notes: str = ""
 
     @classmethod
-    def _parse(cls, text: str) -> "Order":
+    def _parse(cls, text: str) -> Order:
         """Разобрать заказ из строки.
 
         Args:

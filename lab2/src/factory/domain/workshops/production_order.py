@@ -16,7 +16,6 @@ from common.enums.order_status import OrderStatus
 from factory.domain.parts.part import Part
 from factory.domain.workshops.production_process import ProductionProcess
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -63,7 +62,7 @@ class ProductionOrder(Readable, Writable):
         self._deadline: str = deadline
 
     @classmethod
-    def _parse(cls, text: str) -> "ProductionOrder":
+    def _parse(cls, text: str) -> ProductionOrder:
         """Разобрать заказ из строки.
 
         Args:

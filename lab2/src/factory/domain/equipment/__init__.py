@@ -17,7 +17,6 @@ from factory.domain.equipment.maintenance_record import (
 )
 from factory.domain.equipment.milling_machine import MillingMachine
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

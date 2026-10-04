@@ -8,16 +8,15 @@ Module: common.exceptions.equipment_exceptions
 # Imports
 # ---------------------------------------------------------------------------
 
-from common.exceptions.base import FactoryException
-
+from common.exceptions.base import FactoryError
 
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
 
-class EquipmentBrokenException(FactoryException):
+class EquipmentBrokenError(FactoryError):
     """Оборудование сломано."""
 
 
-class EquipmentNotAvailableException(FactoryException):
+class EquipmentNotAvailableError(FactoryError):
     """Оборудование занято или недоступно."""

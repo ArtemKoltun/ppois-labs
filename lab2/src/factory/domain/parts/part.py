@@ -13,10 +13,9 @@ from __future__ import annotations
 from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 from common.enums.part_type import PartType
-from common.exceptions.part_exceptions import InvalidPartException
+from common.exceptions.part_exceptions import InvalidPartError
 from factory.domain.materials.material import Material
 from factory.domain.parts.specification import Specification
-
 
 # ---------------------------------------------------------------------------
 # Classes
@@ -51,12 +50,12 @@ class Part(Readable, Writable):
             material: Материал изготовления.
 
         Raises:
-            InvalidPartException: Если данные некорректны.
+            InvalidPartError: Если данные некорректны.
         """
         if not name:
-            raise InvalidPartException("имя детали не может быть пустым")
+            raise InvalidPartError("имя детали не может быть пустым")
         if weight <= 0:
-            raise InvalidPartException("вес должен быть положительным")
+            raise InvalidPartError("вес должен быть положительным")
         self._name: str = name
         self._type: PartType = part_type
         self._weight: float = weight
@@ -64,7 +63,7 @@ class Part(Readable, Writable):
         self._material: Material = material
 
     @classmethod
-    def _parse(cls, text: str) -> "Part":
+    def _parse(cls, text: str) -> Part:
         """Разобрать деталь из строки.
 
         Args:

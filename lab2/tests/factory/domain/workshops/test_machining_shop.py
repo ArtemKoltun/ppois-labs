@@ -11,7 +11,6 @@ Module: tests.factory.domain.workshops.test_machining_shop
 from factory.domain.workshops.machining_shop import MachiningShop
 from factory.domain.workshops.workshop import Workshop
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

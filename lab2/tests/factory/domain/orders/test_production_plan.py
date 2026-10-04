@@ -12,7 +12,6 @@ from factory.domain.orders.order import Order
 from factory.domain.orders.production_plan import ProductionPlan
 from factory.domain.workshops.workshop import Workshop
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

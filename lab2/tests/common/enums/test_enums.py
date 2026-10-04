@@ -13,7 +13,6 @@ from common.enums.material_type import MaterialType
 from common.enums.order_status import OrderStatus
 from common.enums.part_type import PartType
 
-
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------

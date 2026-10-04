@@ -9,10 +9,7 @@ Module: tests.factory.domain.orders.test_invoice
 # ---------------------------------------------------------------------------
 
 from common.domain.money import Money
-from factory.domain.orders.customer import Customer
 from factory.domain.orders.invoice import Invoice
-from factory.domain.orders.order import Order
-
 
 # ---------------------------------------------------------------------------
 # Tests

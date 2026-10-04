@@ -20,7 +20,6 @@ from factory.domain.workshops.quality_inspection import (
 )
 from factory.domain.workshops.workshop import Workshop
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

@@ -10,9 +10,7 @@ Module: factory.domain.equipment.machine
 
 from __future__ import annotations
 
-from common.enums.equipment_status import EquipmentStatus
 from factory.domain.equipment.equipment import Equipment
-
 
 # ---------------------------------------------------------------------------
 # Classes

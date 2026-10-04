@@ -12,7 +12,6 @@ from factory.domain.documents.document import Document
 from factory.domain.documents.drawing import Drawing
 from factory.domain.parts.part import Part
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

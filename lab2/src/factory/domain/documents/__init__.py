@@ -14,7 +14,6 @@ from factory.domain.documents.quality_certificate import (
     QualityCertificate,
 )
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

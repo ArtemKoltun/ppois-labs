@@ -14,7 +14,6 @@ from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 from common.domain.address import Address
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -61,7 +60,7 @@ class Customer(Readable, Writable):
         self._phone: str = phone
 
     @classmethod
-    def _parse(cls, text: str) -> "Customer":
+    def _parse(cls, text: str) -> Customer:
         """Разобрать клиента из строки.
 
         Args:

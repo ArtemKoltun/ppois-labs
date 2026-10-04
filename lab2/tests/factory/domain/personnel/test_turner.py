@@ -13,7 +13,6 @@ from factory.domain.equipment.machine import Machine
 from factory.domain.personnel.employee import Employee
 from factory.domain.personnel.turner import Turner
 
-
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------

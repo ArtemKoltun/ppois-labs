@@ -12,7 +12,6 @@ from __future__ import annotations
 
 from factory.domain.parts.part import Part
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -60,7 +59,7 @@ class Gear(Part):
         """
         return self._module * self._teeth_count
 
-    def is_reduction_gear(self, other: "Gear") -> bool:
+    def is_reduction_gear(self, other: Gear) -> bool:
         """Проверить, является ли шестерня понижающей.
 
         Args:

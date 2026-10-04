@@ -13,7 +13,6 @@ from __future__ import annotations
 from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -60,7 +59,7 @@ class Workshop(Readable, Writable):
         self._employee_count: int = 0
 
     @classmethod
-    def _parse(cls, text: str) -> "Workshop":
+    def _parse(cls, text: str) -> Workshop:
         """Разобрать цех из строки.
 
         Args:

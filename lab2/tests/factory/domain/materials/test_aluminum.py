@@ -12,7 +12,6 @@ from common.enums.material_type import MaterialType
 from factory.domain.materials.aluminum import Aluminum
 from factory.domain.materials.material import Material
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

@@ -11,7 +11,6 @@ Module: tests.factory.domain.parts.test_piston
 from factory.domain.parts.part import Part
 from factory.domain.parts.piston import Piston
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

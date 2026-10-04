@@ -8,16 +8,15 @@ Module: common.exceptions.material_exceptions
 # Imports
 # ---------------------------------------------------------------------------
 
-from common.exceptions.base import FactoryException
-
+from common.exceptions.base import FactoryError
 
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
 
-class InvalidMaterialException(FactoryException):
+class InvalidMaterialError(FactoryError):
     """Некорректные данные материала."""
 
 
-class InsufficientMaterialException(FactoryException):
+class InsufficientMaterialError(FactoryError):
     """Недостаточно материала на складе."""

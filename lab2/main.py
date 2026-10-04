@@ -16,7 +16,6 @@ from common.domain.address import Address
 from factory.domain.management.factory import Factory
 from factory.ui.menu import build_menu
 
-
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------

@@ -10,11 +10,10 @@ Module: tests.factory.domain.materials.test_material_batch
 
 import pytest
 
-from common.exceptions import InsufficientMaterialException
+from common.exceptions import InsufficientMaterialError
 from factory.domain.materials.material import Material
 from factory.domain.materials.material_batch import MaterialBatch
 from factory.domain.materials.supplier import Supplier
-
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -93,7 +92,7 @@ class TestMaterialBatch:
             supplier: Фикстура поставщика.
         """
         batch: MaterialBatch = _make_batch(steel, supplier, quantity=10.0)
-        with pytest.raises(InsufficientMaterialException):
+        with pytest.raises(InsufficientMaterialError):
             batch.consume(50.0)
 
     def test_add(

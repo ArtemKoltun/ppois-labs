@@ -15,7 +15,6 @@ from common.abstract.writable import Writable
 from common.domain.money import Money
 from factory.domain.orders.customer import Customer
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -57,7 +56,7 @@ class Contract(Readable, Writable):
         self._is_signed: bool = False
 
     @classmethod
-    def _parse(cls, text: str) -> "Contract":
+    def _parse(cls, text: str) -> Contract:
         """Разобрать договор из строки.
 
         Args:

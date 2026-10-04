@@ -11,7 +11,6 @@ Module: tests.factory.domain.materials.test_steel
 from factory.domain.materials.material import Material
 from factory.domain.materials.steel import Steel
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

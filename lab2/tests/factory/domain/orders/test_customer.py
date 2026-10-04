@@ -13,7 +13,6 @@ import pytest
 from common.domain.address import Address
 from factory.domain.orders.customer import Customer
 
-
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------

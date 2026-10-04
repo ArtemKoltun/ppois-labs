@@ -12,7 +12,6 @@ from __future__ import annotations
 
 from factory.domain.materials.material import Material
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------

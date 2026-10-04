@@ -11,11 +11,10 @@ Module: tests.factory.domain.personnel.test_employee
 import pytest
 
 from common.domain.money import Money
-from common.exceptions import EmployeeNotAvailableException
+from common.exceptions import EmployeeNotAvailableError
 from factory.domain.management.department import Department
 from factory.domain.personnel.employee import Employee
 from factory.domain.workshops.workshop import Workshop
-
 
 # ---------------------------------------------------------------------------
 # Tests
@@ -83,7 +82,7 @@ class TestEmployee:
             employee: Фикстура сотрудника.
         """
         employee.go_on_vacation()
-        with pytest.raises(EmployeeNotAvailableException):
+        with pytest.raises(EmployeeNotAvailableError):
             employee.ensure_available()
 
     def test_return_from_vacation(self, employee: Employee) -> None:

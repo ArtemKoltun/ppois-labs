@@ -12,11 +12,10 @@ import pytest
 
 from common.domain.money import Money
 from common.enums.order_status import OrderStatus
-from common.exceptions import InvalidOrderException
+from common.exceptions import InvalidOrderError
 from factory.domain.orders.customer import Customer
 from factory.domain.orders.order import Order
 from factory.domain.parts.part import Part
-
 
 # ---------------------------------------------------------------------------
 # Tests
@@ -46,7 +45,7 @@ class TestOrder:
             customer: Фикстура клиента.
             piston_part: Фикстура детали.
         """
-        with pytest.raises(InvalidOrderException):
+        with pytest.raises(InvalidOrderError):
             Order(
                 number="",
                 customer=customer,
@@ -68,7 +67,7 @@ class TestOrder:
             customer: Фикстура клиента.
             piston_part: Фикстура детали.
         """
-        with pytest.raises(InvalidOrderException):
+        with pytest.raises(InvalidOrderError):
             Order(
                 number="X",
                 customer=customer,

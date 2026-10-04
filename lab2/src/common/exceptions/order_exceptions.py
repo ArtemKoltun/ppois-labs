@@ -8,20 +8,19 @@ Module: common.exceptions.order_exceptions
 # Imports
 # ---------------------------------------------------------------------------
 
-from common.exceptions.base import FactoryException
-
+from common.exceptions.base import FactoryError
 
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
 
-class OrderNotFoundException(FactoryException):
+class OrderNotFoundError(FactoryError):
     """Заказ не найден."""
 
 
-class InvalidOrderException(FactoryException):
+class InvalidOrderError(FactoryError):
     """Некорректные данные заказа."""
 
 
-class ProductionDeadlineMissedException(FactoryException):
+class ProductionDeadlineMissedError(FactoryError):
     """Срок производства заказа пропущен."""

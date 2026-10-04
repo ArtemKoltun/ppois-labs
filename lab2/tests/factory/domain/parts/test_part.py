@@ -11,11 +11,10 @@ Module: tests.factory.domain.parts.test_part
 import pytest
 
 from common.enums.part_type import PartType
-from common.exceptions import InvalidPartException
+from common.exceptions import InvalidPartError
 from factory.domain.materials.material import Material
 from factory.domain.parts.part import Part
 from factory.domain.parts.specification import Specification
-
 
 # ---------------------------------------------------------------------------
 # Tests
@@ -44,7 +43,7 @@ class TestPart:
             specification: Фикстура спецификации.
             steel: Фикстура материала.
         """
-        with pytest.raises(InvalidPartException):
+        with pytest.raises(InvalidPartError):
             Part(
                 name="",
                 part_type=PartType.PISTON,
@@ -64,7 +63,7 @@ class TestPart:
             specification: Фикстура спецификации.
             steel: Фикстура материала.
         """
-        with pytest.raises(InvalidPartException):
+        with pytest.raises(InvalidPartError):
             Part(
                 name="X",
                 part_type=PartType.PISTON,
@@ -84,7 +83,7 @@ class TestPart:
             specification: Фикстура спецификации.
             steel: Фикстура материала.
         """
-        with pytest.raises(InvalidPartException):
+        with pytest.raises(InvalidPartError):
             Part(
                 name="X",
                 part_type=PartType.PISTON,

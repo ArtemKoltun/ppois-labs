@@ -14,7 +14,6 @@ from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 from factory.domain.personnel.employee import Employee
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -55,7 +54,7 @@ class Document(Readable, Writable):
         self._title: str = title
 
     @classmethod
-    def _parse(cls, text: str) -> "Document":
+    def _parse(cls, text: str) -> Document:
         """Разобрать документ из строки.
 
         Args:

@@ -14,11 +14,10 @@ from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 from common.domain.money import Money
 from common.exceptions.employee_exceptions import (
-    EmployeeNotAvailableException,
+    EmployeeNotAvailableError,
 )
 from factory.domain.management.department import Department
 from factory.domain.workshops.workshop import Workshop
-
 
 # ---------------------------------------------------------------------------
 # Classes
@@ -70,7 +69,7 @@ class Employee(Readable, Writable):
         self._is_available: bool = True
 
     @classmethod
-    def _parse(cls, text: str) -> "Employee":
+    def _parse(cls, text: str) -> Employee:
         """Разобрать сотрудника из строки.
 
         Args:
@@ -160,10 +159,10 @@ class Employee(Readable, Writable):
             Ничего не возвращает.
 
         Raises:
-            EmployeeNotAvailableException: Если сотрудник недоступен.
+            EmployeeNotAvailableError: Если сотрудник недоступен.
         """
         if not self._is_available:
-            raise EmployeeNotAvailableException(
+            raise EmployeeNotAvailableError(
                 f"сотрудник {self._name} недоступен"
             )
 

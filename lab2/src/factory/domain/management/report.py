@@ -15,7 +15,6 @@ from common.abstract.writable import Writable
 from factory.domain.management.statistics import Statistics
 from factory.domain.personnel.employee import Employee
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -56,7 +55,7 @@ class Report(Readable, Writable):
         self._statistics: Statistics = statistics
 
     @classmethod
-    def _parse(cls, text: str) -> "Report":
+    def _parse(cls, text: str) -> Report:
         """Разобрать отчёт из строки.
 
         Args:

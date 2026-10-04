@@ -11,7 +11,6 @@ Module: tests.factory.domain.parts.test_shaft
 from factory.domain.parts.part import Part
 from factory.domain.parts.shaft import Shaft
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

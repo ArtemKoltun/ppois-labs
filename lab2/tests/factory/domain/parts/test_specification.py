@@ -10,9 +10,8 @@ Module: tests.factory.domain.parts.test_specification
 
 import pytest
 
-from common.exceptions import InvalidSpecificationException
+from common.exceptions import InvalidSpecificationError
 from factory.domain.parts.specification import Specification
-
 
 # ---------------------------------------------------------------------------
 # Tests
@@ -33,12 +32,12 @@ class TestSpecification:
 
     def test_empty_name_raises(self) -> None:
         """Пустое имя недопустимо."""
-        with pytest.raises(InvalidSpecificationException):
+        with pytest.raises(InvalidSpecificationError):
             Specification(part_name="")
 
     def test_zero_tolerance_raises(self) -> None:
         """Нулевой допуск недопустим."""
-        with pytest.raises(InvalidSpecificationException):
+        with pytest.raises(InvalidSpecificationError):
             Specification(part_name="X", tolerance=0.0)
 
     def test_is_strict(self) -> None:

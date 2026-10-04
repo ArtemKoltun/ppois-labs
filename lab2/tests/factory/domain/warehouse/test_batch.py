@@ -16,7 +16,6 @@ from factory.domain.materials.supplier import Supplier
 from factory.domain.parts.part import Part
 from factory.domain.warehouse.batch import Batch
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

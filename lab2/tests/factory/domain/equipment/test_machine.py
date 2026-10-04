@@ -10,7 +10,6 @@ Module: tests.factory.domain.equipment.test_machine
 
 from factory.domain.equipment.machine import Machine
 
-
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------

@@ -8,7 +8,7 @@ Module: common.exceptions.base
 # Classes
 # ---------------------------------------------------------------------------
 
-class FactoryException(Exception):
+class FactoryError(Exception):
     """Базовое исключение всех модулей проекта.
 
     Attributes:

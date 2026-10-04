@@ -14,7 +14,6 @@ from factory.domain.management.report import Report
 from factory.domain.management.statistics import Statistics
 from factory.domain.personnel.employee import Employee
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

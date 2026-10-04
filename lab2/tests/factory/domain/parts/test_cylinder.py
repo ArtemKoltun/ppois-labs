@@ -11,7 +11,6 @@ Module: tests.factory.domain.parts.test_cylinder
 from factory.domain.parts.cylinder import Cylinder
 from factory.domain.parts.part import Part
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

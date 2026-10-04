@@ -10,11 +10,8 @@ Module: common.abstract.readable
 
 from __future__ import annotations
 
-from abc import ABC
-from abc import abstractmethod
-from typing import Self
-from typing import TextIO
-
+from abc import ABC, abstractmethod
+from typing import Self, TextIO
 
 # ---------------------------------------------------------------------------
 # Classes

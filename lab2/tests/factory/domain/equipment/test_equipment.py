@@ -11,9 +11,8 @@ Module: tests.factory.domain.equipment.test_equipment
 import pytest
 
 from common.enums.equipment_status import EquipmentStatus
-from common.exceptions import EquipmentBrokenException
+from common.exceptions import EquipmentBrokenError
 from factory.domain.equipment.equipment import Equipment
-
 
 # ---------------------------------------------------------------------------
 # Tests
@@ -58,7 +57,7 @@ class TestEquipment:
             equipment: Фикстура оборудования.
         """
         equipment.mark_broken()
-        with pytest.raises(EquipmentBrokenException):
+        with pytest.raises(EquipmentBrokenError):
             equipment.start()
 
     def test_stop(self, equipment: Equipment) -> None:

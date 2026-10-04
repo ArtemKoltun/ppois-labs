@@ -11,7 +11,6 @@ Module: tests.factory.domain.personnel.test_engineer
 from factory.domain.personnel.employee import Employee
 from factory.domain.personnel.engineer import Engineer
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

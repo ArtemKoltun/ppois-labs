@@ -11,7 +11,6 @@ Module: tests.factory.domain.parts.test_bearing
 from factory.domain.parts.bearing import Bearing
 from factory.domain.parts.part import Part
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

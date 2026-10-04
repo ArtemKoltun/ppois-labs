@@ -14,7 +14,6 @@ from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 from factory.domain.equipment.equipment import Equipment
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -54,7 +53,7 @@ class MaintenanceRecord(Readable, Writable):
         self._cost: float = cost
 
     @classmethod
-    def _parse(cls, text: str) -> "MaintenanceRecord":
+    def _parse(cls, text: str) -> MaintenanceRecord:
         """Разобрать запись из строки.
 
         Args:

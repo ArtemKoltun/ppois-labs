@@ -12,7 +12,6 @@ from common.domain.money import Money
 from factory.domain.orders.invoice import Invoice
 from factory.domain.orders.payment import Payment
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

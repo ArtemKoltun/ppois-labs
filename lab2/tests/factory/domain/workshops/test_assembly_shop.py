@@ -11,7 +11,6 @@ Module: tests.factory.domain.workshops.test_assembly_shop
 from factory.domain.workshops.assembly_shop import AssemblyShop
 from factory.domain.workshops.workshop import Workshop
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

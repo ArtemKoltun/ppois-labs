@@ -14,26 +14,23 @@ import pytest
 
 from common.domain.address import Address
 from common.domain.money import Money
+from common.enums.equipment_status import EquipmentStatus
 from common.enums.material_type import MaterialType
 from common.enums.part_type import PartType
-from factory.domain.materials.material import Material
-from factory.domain.materials.supplier import Supplier
-from factory.domain.parts.part import Part
-from factory.domain.parts.specification import Specification
-from common.enums.equipment_status import EquipmentStatus
-from common.enums.order_status import OrderStatus
+from factory.domain.documents.document import Document
 from factory.domain.equipment.equipment import Equipment
 from factory.domain.equipment.machine import Machine
 from factory.domain.management.department import Department
+from factory.domain.management.statistics import Statistics
+from factory.domain.materials.material import Material
+from factory.domain.materials.supplier import Supplier
+from factory.domain.orders.customer import Customer
+from factory.domain.orders.invoice import Invoice
+from factory.domain.orders.order import Order
+from factory.domain.parts.part import Part
+from factory.domain.parts.specification import Specification
 from factory.domain.personnel.employee import Employee
 from factory.domain.workshops.workshop import Workshop
-from factory.domain.orders.customer import Customer
-from factory.domain.orders.order import Order
-from factory.domain.orders.invoice import Invoice
-from factory.domain.parts.part import Part
-from factory.domain.documents.document import Document
-from factory.domain.management.statistics import Statistics
-
 
 # ---------------------------------------------------------------------------
 # Constants

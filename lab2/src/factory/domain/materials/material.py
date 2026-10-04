@@ -12,11 +12,9 @@ from __future__ import annotations
 
 from common.abstract.readable import Readable
 from common.abstract.writable import Writable
-from common.enums.material_type import MaterialType
 from common.exceptions.material_exceptions import (
-    InvalidMaterialException,
+    InvalidMaterialError,
 )
-
 
 # ---------------------------------------------------------------------------
 # Classes
@@ -48,16 +46,16 @@ class Material(Readable, Writable):
             cost_per_kg: Стоимость за килограмм.
 
         Raises:
-            InvalidMaterialException: Если данные некорректны.
+            InvalidMaterialError: Если данные некорректны.
         """
         if not name:
-            raise InvalidMaterialException("имя не может быть пустым")
+            raise InvalidMaterialError("имя не может быть пустым")
         if density <= 0:
-            raise InvalidMaterialException(
+            raise InvalidMaterialError(
                 "плотность должна быть положительной"
             )
         if cost_per_kg < 0:
-            raise InvalidMaterialException(
+            raise InvalidMaterialError(
                 "стоимость не может быть отрицательной"
             )
         self._name: str = name
@@ -66,7 +64,7 @@ class Material(Readable, Writable):
         self._cost_per_kg: float = cost_per_kg
 
     @classmethod
-    def _parse(cls, text: str) -> "Material":
+    def _parse(cls, text: str) -> Material:
         """Разобрать материал из строки.
 
         Args:

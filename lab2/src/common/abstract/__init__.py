@@ -11,7 +11,6 @@ Module: common.abstract
 from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

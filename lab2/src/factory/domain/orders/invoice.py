@@ -16,7 +16,6 @@ from common.domain.money import Money
 from factory.domain.orders.customer import Customer
 from factory.domain.orders.order import Order
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -58,7 +57,7 @@ class Invoice(Readable, Writable):
         self._is_paid: bool = False
 
     @classmethod
-    def _parse(cls, text: str) -> "Invoice":
+    def _parse(cls, text: str) -> Invoice:
         """Разобрать счёт из строки.
 
         Args:

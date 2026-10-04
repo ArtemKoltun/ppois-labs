@@ -11,7 +11,6 @@ Module: tests.factory.domain.equipment.test_lathe
 from factory.domain.equipment.lathe import Lathe
 from factory.domain.equipment.machine import Machine
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

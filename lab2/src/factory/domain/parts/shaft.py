@@ -12,7 +12,6 @@ from __future__ import annotations
 
 from factory.domain.parts.part import Part
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -67,4 +66,3 @@ class Shaft(Part):
             ``True``, если отношение длины к диаметру больше 20.
         """
         return self.aspect_ratio() > 20
-    

@@ -15,7 +15,6 @@ from factory.domain.personnel.technologist import Technologist
 from factory.domain.personnel.turner import Turner
 from factory.domain.personnel.work_shift import WorkShift
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

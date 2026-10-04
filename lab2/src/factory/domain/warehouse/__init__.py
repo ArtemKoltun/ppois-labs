@@ -18,7 +18,6 @@ from factory.domain.warehouse.raw_material_warehouse import (
 from factory.domain.warehouse.storage_unit import StorageUnit
 from factory.domain.warehouse.warehouse import Warehouse
 
-
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------

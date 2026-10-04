@@ -8,57 +8,44 @@ Module: common.exceptions
 # Imports
 # ---------------------------------------------------------------------------
 
-from common.exceptions.base import FactoryException
+from common.exceptions.base import FactoryError
 from common.exceptions.employee_exceptions import (
-    EmployeeNotAvailableException,
+    EmployeeNotAvailableError,
 )
 from common.exceptions.equipment_exceptions import (
-    EquipmentBrokenException,
-)
-from common.exceptions.equipment_exceptions import (
-    EquipmentNotAvailableException,
+    EquipmentBrokenError,
+    EquipmentNotAvailableError,
 )
 from common.exceptions.material_exceptions import (
-    InsufficientMaterialException,
-)
-from common.exceptions.material_exceptions import (
-    InvalidMaterialException,
+    InsufficientMaterialError,
+    InvalidMaterialError,
 )
 from common.exceptions.order_exceptions import (
-    InvalidOrderException,
-)
-from common.exceptions.order_exceptions import (
-    OrderNotFoundException,
-)
-from common.exceptions.order_exceptions import (
-    ProductionDeadlineMissedException,
+    InvalidOrderError,
+    OrderNotFoundError,
+    ProductionDeadlineMissedError,
 )
 from common.exceptions.part_exceptions import (
-    InvalidPartException,
+    InvalidPartError,
+    InvalidSpecificationError,
+    QualityControlFailedError,
 )
-from common.exceptions.part_exceptions import (
-    InvalidSpecificationException,
-)
-from common.exceptions.part_exceptions import (
-    QualityControlFailedException,
-)
-
 
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
 __all__ = [
-    "EmployeeNotAvailableException",
-    "EquipmentBrokenException",
-    "EquipmentNotAvailableException",
-    "FactoryException",
-    "InsufficientMaterialException",
-    "InvalidMaterialException",
-    "InvalidOrderException",
-    "InvalidPartException",
-    "InvalidSpecificationException",
-    "OrderNotFoundException",
-    "ProductionDeadlineMissedException",
-    "QualityControlFailedException",
+    "EmployeeNotAvailableError",
+    "EquipmentBrokenError",
+    "EquipmentNotAvailableError",
+    "FactoryError",
+    "InsufficientMaterialError",
+    "InvalidMaterialError",
+    "InvalidOrderError",
+    "InvalidPartError",
+    "InvalidSpecificationError",
+    "OrderNotFoundError",
+    "ProductionDeadlineMissedError",
+    "QualityControlFailedError",
 ]

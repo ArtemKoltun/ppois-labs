@@ -14,9 +14,8 @@ from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 from common.enums.equipment_status import EquipmentStatus
 from common.exceptions.equipment_exceptions import (
-    EquipmentBrokenException,
+    EquipmentBrokenError,
 )
-
 
 # ---------------------------------------------------------------------------
 # Classes
@@ -60,7 +59,7 @@ class Equipment(Readable, Writable):
         self._hours_worked: float = 0.0
 
     @classmethod
-    def _parse(cls, text: str) -> "Equipment":
+    def _parse(cls, text: str) -> Equipment:
         """Разобрать оборудование из строки.
 
         Args:
@@ -111,10 +110,10 @@ class Equipment(Readable, Writable):
             Ничего не возвращает.
 
         Raises:
-            EquipmentBrokenException: Если оборудование сломано.
+            EquipmentBrokenError: Если оборудование сломано.
         """
         if self._status is EquipmentStatus.BROKEN:
-            raise EquipmentBrokenException(
+            raise EquipmentBrokenError(
                 f"оборудование {self._name} сломано"
             )
         self._status = EquipmentStatus.WORKING

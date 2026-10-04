@@ -15,7 +15,6 @@ from common.abstract.writable import Writable
 from factory.domain.orders.order import Order
 from factory.domain.workshops.workshop import Workshop
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -49,7 +48,7 @@ class ProductionPlan(Readable, Writable):
         self._target_output: int = target_output
 
     @classmethod
-    def _parse(cls, text: str) -> "ProductionPlan":
+    def _parse(cls, text: str) -> ProductionPlan:
         """Разобрать план из строки.
 
         Args:

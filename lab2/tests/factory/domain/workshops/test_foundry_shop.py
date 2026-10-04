@@ -11,7 +11,6 @@ Module: tests.factory.domain.workshops.test_foundry_shop
 from factory.domain.workshops.foundry_shop import FoundryShop
 from factory.domain.workshops.workshop import Workshop
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

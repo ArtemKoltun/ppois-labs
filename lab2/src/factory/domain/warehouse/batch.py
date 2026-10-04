@@ -15,7 +15,6 @@ from common.abstract.writable import Writable
 from factory.domain.materials.material_batch import MaterialBatch
 from factory.domain.parts.part import Part
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -58,7 +57,7 @@ class Batch(Readable, Writable):
         self._produced_date: str = produced_date
 
     @classmethod
-    def _parse(cls, text: str) -> "Batch":
+    def _parse(cls, text: str) -> Batch:
         """Разобрать партию из строки.
 
         Args:

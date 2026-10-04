@@ -11,7 +11,6 @@ Module: tests.factory.domain.parts.test_gear
 from factory.domain.parts.gear import Gear
 from factory.domain.parts.part import Part
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

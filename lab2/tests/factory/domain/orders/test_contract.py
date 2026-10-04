@@ -12,7 +12,6 @@ from common.domain.money import Money
 from factory.domain.orders.contract import Contract
 from factory.domain.orders.customer import Customer
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

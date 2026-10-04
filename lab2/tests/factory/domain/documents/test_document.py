@@ -13,7 +13,6 @@ import pytest
 from factory.domain.documents.document import Document
 from factory.domain.personnel.employee import Employee
 
-
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------

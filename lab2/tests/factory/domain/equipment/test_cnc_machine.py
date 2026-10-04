@@ -11,7 +11,6 @@ Module: tests.factory.domain.equipment.test_cnc_machine
 from factory.domain.equipment.cnc_machine import CNCMachine
 from factory.domain.equipment.machine import Machine
 
-
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------

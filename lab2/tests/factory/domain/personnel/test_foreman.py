@@ -12,7 +12,6 @@ from factory.domain.personnel.employee import Employee
 from factory.domain.personnel.foreman import Foreman
 from factory.domain.workshops.workshop import Workshop
 
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------

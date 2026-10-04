@@ -14,7 +14,6 @@ from common.abstract.readable import Readable
 from common.abstract.writable import Writable
 from common.domain.address import Address
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -59,7 +58,7 @@ class Supplier(Readable, Writable):
         self._rating: float = rating
 
     @classmethod
-    def _parse(cls, text: str) -> "Supplier":
+    def _parse(cls, text: str) -> Supplier:
         """Разобрать поставщика из строки.
 
         Args:

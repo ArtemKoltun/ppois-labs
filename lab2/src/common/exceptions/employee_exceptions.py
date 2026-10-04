@@ -8,12 +8,11 @@ Module: common.exceptions.employee_exceptions
 # Imports
 # ---------------------------------------------------------------------------
 
-from common.exceptions.base import FactoryException
-
+from common.exceptions.base import FactoryError
 
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
 
-class EmployeeNotAvailableException(FactoryException):
+class EmployeeNotAvailableError(FactoryError):
     """Сотрудник недоступен (отпуск, больничный)."""

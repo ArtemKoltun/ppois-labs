@@ -11,9 +11,8 @@ Module: tests.factory.domain.materials.test_material
 import pytest
 
 from common.enums.material_type import MaterialType
-from common.exceptions import InvalidMaterialException
+from common.exceptions import InvalidMaterialError
 from factory.domain.materials.material import Material
-
 
 # ---------------------------------------------------------------------------
 # Tests
@@ -35,7 +34,7 @@ class TestMaterial:
 
     def test_empty_name_raises(self) -> None:
         """Пустое имя недопустимо."""
-        with pytest.raises(InvalidMaterialException):
+        with pytest.raises(InvalidMaterialError):
             Material(
                 name="",
                 material_type="steel",
@@ -45,7 +44,7 @@ class TestMaterial:
 
     def test_zero_density_raises(self) -> None:
         """Нулевая плотность недопустима."""
-        with pytest.raises(InvalidMaterialException):
+        with pytest.raises(InvalidMaterialError):
             Material(
                 name="X",
                 material_type="steel",
@@ -55,7 +54,7 @@ class TestMaterial:
 
     def test_negative_cost_raises(self) -> None:
         """Отрицательная цена недопустима."""
-        with pytest.raises(InvalidMaterialException):
+        with pytest.raises(InvalidMaterialError):
             Material(
                 name="X",
                 material_type="steel",

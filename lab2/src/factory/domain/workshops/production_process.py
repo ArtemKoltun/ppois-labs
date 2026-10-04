@@ -15,7 +15,6 @@ from common.abstract.writable import Writable
 from factory.domain.parts.part import Part
 from factory.domain.workshops.workshop import Workshop
 
-
 # ---------------------------------------------------------------------------
 # Classes
 # ---------------------------------------------------------------------------
@@ -53,7 +52,7 @@ class ProductionProcess(Readable, Writable):
         self._duration_hours: float = duration_hours
 
     @classmethod
-    def _parse(cls, text: str) -> "ProductionProcess":
+    def _parse(cls, text: str) -> ProductionProcess:
         """Разобрать процесс из строки.
 
         Args:

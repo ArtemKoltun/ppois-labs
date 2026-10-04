@@ -12,8 +12,6 @@ from __future__ import annotations
 
 from factory.domain.documents.document import Document
 from factory.domain.parts.part import Part
-from factory.domain.personnel.employee import Employee
-
 
 # ---------------------------------------------------------------------------
 # Classes
