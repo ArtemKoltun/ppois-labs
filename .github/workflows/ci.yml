@@ -3,16 +3,34 @@ name: CI
 on:
   push:
     branches: [main]
+    paths:
+      - "lab*/**"
+      - ".github/workflows/ci.yml"
   pull_request:
     branches: [main]
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      labs: ${{ steps.find.outputs.labs }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: find
+        name: Find lab folders
+        run: |
+          LABS=$(ls -d lab*/ 2>/dev/null | sed 's|/$||' | jq -R -s -c 'split("\n") | map(select(. != ""))')
+          echo "Found labs: $LABS"
+          echo "labs=$LABS" >> $GITHUB_OUTPUT
+
   test:
+    needs: setup
+    if: needs.setup.outputs.labs != '[]'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        lab: [lab1]
+        lab: ${{ fromJSON(needs.setup.outputs.labs) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -35,13 +53,15 @@ jobs:
         run: pytest
 
   build:
-    needs: test
-    if: github.ref == 'refs/heads/main'
+    needs: [setup, test]
+    if: |
+      github.ref == 'refs/heads/main' &&
+      needs.setup.outputs.labs != '[]'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        lab: [lab1]
+        lab: ${{ fromJSON(needs.setup.outputs.labs) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -72,5 +92,5 @@ jobs:
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ github.run_number }}
+          tag_name: ${{ github.run_number }}
           files: artifacts/**/*

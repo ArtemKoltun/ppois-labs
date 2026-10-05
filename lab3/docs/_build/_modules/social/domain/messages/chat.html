@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>social.domain.messages.chat &#8212; документация PPOIS Lab 3 0.1.0</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../../../_static/documentation_options.js?v=6ff560e8"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Исходный код social.domain.messages.chat</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Личный чат.</span>
+
+<span class="sd">Module: social.domain.messages.chat</span>
+<span class="sd">"""</span>
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Imports</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.abstract.readable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Readable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.abstract.writable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Writable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.exceptions.connection_exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">MessageDeliveryError</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Classes</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Chat">
+<a class="viewcode-back" href="../../../../api/social.html#social.domain.messages.chat.Chat">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Chat</span><span class="p">(</span><span class="n">Readable</span><span class="p">,</span> <span class="n">Writable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Личный чат между двумя пользователями.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _first_user: Первый участник.</span>
+<span class="sd">        _second_user: Второй участник.</span>
+<span class="sd">        _messages_count: Число сообщений.</span>
+<span class="sd">        _is_muted: Отключены ли уведомления.</span>
+<span class="sd">        _is_archived: Архивирован ли.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">first_user</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">second_user</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Создать чат.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            first_user: Первый участник.</span>
+<span class="sd">            second_user: Второй участник.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            MessageDeliveryError: Если участники совпадают.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">first_user</span> <span class="o">==</span> <span class="n">second_user</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">MessageDeliveryError</span><span class="p">(</span>
+                <span class="s2">"участники чата не могут совпадать"</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_first_user</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">first_user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_second_user</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">second_user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_messages_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_muted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_archived</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"Chat"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Разобрать чат из строки.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text: Строка с полями через точку с запятой.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Новый экземпляр.</span>
+<span class="sd">        """</span>
+        <span class="n">parts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">first_user</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">second_user</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">first_user</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Первый участник.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_user</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">second_user</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Второй участник.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_second_user</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">messages_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Число сообщений.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Целое число.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_messages_count</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_muted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Отключены ли уведомления.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если отключены.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_muted</span>
+
+<div class="viewcode-block" id="Chat.send">
+<a class="viewcode-back" href="../../../../api/social.html#social.domain.messages.chat.Chat.send">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Отправить сообщение.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_messages_count</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="Chat.mute">
+<a class="viewcode-back" href="../../../../api/social.html#social.domain.messages.chat.Chat.mute">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Отключить уведомления.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_muted</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="Chat.unmute">
+<a class="viewcode-back" href="../../../../api/social.html#social.domain.messages.chat.Chat.unmute">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unmute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Включить уведомления.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_muted</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="Chat.archive">
+<a class="viewcode-back" href="../../../../api/social.html#social.domain.messages.chat.Chat.archive">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">archive</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Архивировать чат.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_archived</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="Chat.unarchive">
+<a class="viewcode-back" href="../../../../api/social.html#social.domain.messages.chat.Chat.unarchive">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unarchive</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Разархивировать чат.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_archived</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="Chat.is_archived">
+<a class="viewcode-back" href="../../../../api/social.html#social.domain.messages.chat.Chat.is_archived">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_archived</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Проверить архивацию.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если архивирован.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_archived</span></div>
+
+
+<div class="viewcode-block" id="Chat.has_participant">
+<a class="viewcode-back" href="../../../../api/social.html#social.domain.messages.chat.Chat.has_participant">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_participant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Проверить, участвует ли пользователь.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            username: Имя пользователя.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если участвует.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">username</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_first_user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_second_user</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Chat.is_active">
+<a class="viewcode-back" href="../../../../api/social.html#social.domain.messages.chat.Chat.is_active">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Проверить активность чата.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если есть сообщения и не архивирован.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_messages_count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_archived</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Сравнить два чата.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other: Другой объект.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` при совпадении пары участников.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Chat</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="n">pair_self</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_first_user</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_second_user</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">pair_other</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">other</span><span class="o">.</span><span class="n">_first_user</span><span class="p">,</span>
+            <span class="n">other</span><span class="o">.</span><span class="n">_second_user</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">pair_self</span> <span class="o">==</span> <span class="n">pair_other</span> <span class="ow">or</span> <span class="n">pair_self</span> <span class="o">==</span> <span class="n">pair_other</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть хеш чата.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Целое число.</span>
+<span class="sd">        """</span>
+        <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="n">second</span><span class="p">:</span> <span class="nb">str</span>
+        <span class="n">first</span><span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_first_user</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_second_user</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="n">first</span><span class="p">,</span> <span class="n">second</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть текстовое представление.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка с полями через точку с запятой.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_first_user</span><span class="si">}</span><span class="s2">; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_second_user</span><span class="si">}</span><span class="s2">"</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">PPOIS Lab 3</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Содержание</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/common.html">Общий код</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/social.html">Домен социальной сети</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Код модуля</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Обзор: исходный код модуля &#8212; документация PPOIS Lab 2 0.1.0</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=6ff560e8"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="../genindex.html" />
+    <link rel="search" title="Поиск" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Все модули, в которых есть код</h1>
+<ul><li><a href="common/abstract/readable.html">common.abstract.readable</a></li>
+<li><a href="common/abstract/writable.html">common.abstract.writable</a></li>
+<li><a href="common/domain/address.html">common.domain.address</a></li>
+<li><a href="common/domain/money.html">common.domain.money</a></li>
+<li><a href="common/enums/equipment_status.html">common.enums.equipment_status</a></li>
+<li><a href="common/enums/material_type.html">common.enums.material_type</a></li>
+<li><a href="common/enums/order_status.html">common.enums.order_status</a></li>
+<li><a href="common/enums/part_type.html">common.enums.part_type</a></li>
+<li><a href="common/exceptions/base.html">common.exceptions.base</a></li>
+<li><a href="common/exceptions/employee_exceptions.html">common.exceptions.employee_exceptions</a></li>
+<li><a href="common/exceptions/equipment_exceptions.html">common.exceptions.equipment_exceptions</a></li>
+<li><a href="common/exceptions/material_exceptions.html">common.exceptions.material_exceptions</a></li>
+<li><a href="common/exceptions/order_exceptions.html">common.exceptions.order_exceptions</a></li>
+<li><a href="common/exceptions/part_exceptions.html">common.exceptions.part_exceptions</a></li>
+<li><a href="factory/domain/documents/document.html">factory.domain.documents.document</a></li>
+<li><a href="factory/domain/documents/drawing.html">factory.domain.documents.drawing</a></li>
+<li><a href="factory/domain/documents/quality_certificate.html">factory.domain.documents.quality_certificate</a></li>
+<li><a href="factory/domain/equipment/cnc_machine.html">factory.domain.equipment.cnc_machine</a></li>
+<li><a href="factory/domain/equipment/equipment.html">factory.domain.equipment.equipment</a></li>
+<li><a href="factory/domain/equipment/lathe.html">factory.domain.equipment.lathe</a></li>
+<li><a href="factory/domain/equipment/machine.html">factory.domain.equipment.machine</a></li>
+<li><a href="factory/domain/equipment/maintenance_record.html">factory.domain.equipment.maintenance_record</a></li>
+<li><a href="factory/domain/equipment/milling_machine.html">factory.domain.equipment.milling_machine</a></li>
+<li><a href="factory/domain/management/department.html">factory.domain.management.department</a></li>
+<li><a href="factory/domain/management/factory.html">factory.domain.management.factory</a></li>
+<li><a href="factory/domain/management/report.html">factory.domain.management.report</a></li>
+<li><a href="factory/domain/management/statistics.html">factory.domain.management.statistics</a></li>
+<li><a href="factory/domain/materials/aluminum.html">factory.domain.materials.aluminum</a></li>
+<li><a href="factory/domain/materials/material.html">factory.domain.materials.material</a></li>
+<li><a href="factory/domain/materials/material_batch.html">factory.domain.materials.material_batch</a></li>
+<li><a href="factory/domain/materials/plastic.html">factory.domain.materials.plastic</a></li>
+<li><a href="factory/domain/materials/steel.html">factory.domain.materials.steel</a></li>
+<li><a href="factory/domain/materials/supplier.html">factory.domain.materials.supplier</a></li>
+<li><a href="factory/domain/orders/contract.html">factory.domain.orders.contract</a></li>
+<li><a href="factory/domain/orders/customer.html">factory.domain.orders.customer</a></li>
+<li><a href="factory/domain/orders/invoice.html">factory.domain.orders.invoice</a></li>
+<li><a href="factory/domain/orders/order.html">factory.domain.orders.order</a></li>
+<li><a href="factory/domain/orders/payment.html">factory.domain.orders.payment</a></li>
+<li><a href="factory/domain/orders/production_plan.html">factory.domain.orders.production_plan</a></li>
+<li><a href="factory/domain/parts/bearing.html">factory.domain.parts.bearing</a></li>
+<li><a href="factory/domain/parts/cylinder.html">factory.domain.parts.cylinder</a></li>
+<li><a href="factory/domain/parts/gear.html">factory.domain.parts.gear</a></li>
+<li><a href="factory/domain/parts/part.html">factory.domain.parts.part</a></li>
+<li><a href="factory/domain/parts/piston.html">factory.domain.parts.piston</a></li>
+<li><a href="factory/domain/parts/shaft.html">factory.domain.parts.shaft</a></li>
+<li><a href="factory/domain/parts/specification.html">factory.domain.parts.specification</a></li>
+<li><a href="factory/domain/personnel/employee.html">factory.domain.personnel.employee</a></li>
+<li><a href="factory/domain/personnel/engineer.html">factory.domain.personnel.engineer</a></li>
+<li><a href="factory/domain/personnel/foreman.html">factory.domain.personnel.foreman</a></li>
+<li><a href="factory/domain/personnel/technologist.html">factory.domain.personnel.technologist</a></li>
+<li><a href="factory/domain/personnel/turner.html">factory.domain.personnel.turner</a></li>
+<li><a href="factory/domain/personnel/work_shift.html">factory.domain.personnel.work_shift</a></li>
+<li><a href="factory/domain/warehouse/batch.html">factory.domain.warehouse.batch</a></li>
+<li><a href="factory/domain/warehouse/finished_goods_warehouse.html">factory.domain.warehouse.finished_goods_warehouse</a></li>
+<li><a href="factory/domain/warehouse/raw_material_warehouse.html">factory.domain.warehouse.raw_material_warehouse</a></li>
+<li><a href="factory/domain/warehouse/storage_unit.html">factory.domain.warehouse.storage_unit</a></li>
+<li><a href="factory/domain/warehouse/warehouse.html">factory.domain.warehouse.warehouse</a></li>
+<li><a href="factory/domain/workshops/assembly_shop.html">factory.domain.workshops.assembly_shop</a></li>
+<li><a href="factory/domain/workshops/foundry_shop.html">factory.domain.workshops.foundry_shop</a></li>
+<li><a href="factory/domain/workshops/machining_shop.html">factory.domain.workshops.machining_shop</a></li>
+<li><a href="factory/domain/workshops/production_order.html">factory.domain.workshops.production_order</a></li>
+<li><a href="factory/domain/workshops/production_process.html">factory.domain.workshops.production_process</a></li>
+<li><a href="factory/domain/workshops/quality_inspection.html">factory.domain.workshops.quality_inspection</a></li>
+<li><a href="factory/domain/workshops/workshop.html">factory.domain.workshops.workshop</a></li>
+</ul>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PPOIS Lab 2</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Содержание</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/common.html">Общий код</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/factory.html">Домен завода</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

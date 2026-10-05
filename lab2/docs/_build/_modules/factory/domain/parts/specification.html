@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>factory.domain.parts.specification &#8212; документация PPOIS Lab 2 0.1.0</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../../../_static/documentation_options.js?v=6ff560e8"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Исходный код factory.domain.parts.specification</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Спецификация детали.</span>
+
+<span class="sd">Module: factory.domain.parts.specification</span>
+<span class="sd">"""</span>
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Imports</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.abstract.readable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Readable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.abstract.writable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Writable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.exceptions.part_exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InvalidSpecificationException</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Constants</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="n">_DEFAULT_TOLERANCE</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="sd">"""Допуск по умолчанию в миллиметрах."""</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Classes</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Specification">
+<a class="viewcode-back" href="../../../../api/factory.html#factory.domain.parts.specification.Specification">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Specification</span><span class="p">(</span><span class="n">Readable</span><span class="p">,</span> <span class="n">Writable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Техническая спецификация детали.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _part_name: Наименование детали.</span>
+<span class="sd">        _tolerance: Допуск.</span>
+<span class="sd">        _surface_finish: Чистота поверхности.</span>
+<span class="sd">        _material_type: Тип материала.</span>
+<span class="sd">        _notes: Примечания.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">part_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">tolerance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">_DEFAULT_TOLERANCE</span><span class="p">,</span>
+        <span class="n">surface_finish</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"Ra 1.6"</span><span class="p">,</span>
+        <span class="n">material_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"steel"</span><span class="p">,</span>
+        <span class="n">notes</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Создать спецификацию.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            part_name: Наименование детали.</span>
+<span class="sd">            tolerance: Допуск.</span>
+<span class="sd">            surface_finish: Чистота поверхности.</span>
+<span class="sd">            material_type: Тип материала.</span>
+<span class="sd">            notes: Примечания.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            InvalidSpecificationException: Если данные некорректны.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">part_name</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidSpecificationException</span><span class="p">(</span>
+                <span class="s2">"имя детали не может быть пустым"</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">tolerance</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidSpecificationException</span><span class="p">(</span>
+                <span class="s2">"допуск должен быть положительным"</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_part_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">part_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tolerance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">tolerance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_surface_finish</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">surface_finish</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_material_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">material_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_notes</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">notes</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"Specification"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Разобрать спецификацию из строки.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text: Строка с полями через запятую.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Новый экземпляр ``Specification``.</span>
+<span class="sd">        """</span>
+        <span class="n">parts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">part_name</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">tolerance</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+            <span class="n">surface_finish</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+            <span class="n">material_type</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+            <span class="n">notes</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span> <span class="k">else</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">part_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Наименование детали.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_part_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tolerance</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Допуск.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Миллиметры.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tolerance</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">surface_finish</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Чистота поверхности.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_surface_finish</span>
+
+<div class="viewcode-block" id="Specification.is_strict">
+<a class="viewcode-back" href="../../../../api/factory.html#factory.domain.parts.specification.Specification.is_strict">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_strict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Проверить, строгая ли спецификация.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если допуск меньше 0.05 мм.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tolerance</span> <span class="o">&lt;</span> <span class="mf">0.05</span></div>
+
+
+<div class="viewcode-block" id="Specification.update_notes">
+<a class="viewcode-back" href="../../../../api/factory.html#factory.domain.parts.specification.Specification.update_notes">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_notes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Обновить примечания.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            notes: Новые примечания.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_notes</span> <span class="o">=</span> <span class="n">notes</span></div>
+
+
+<div class="viewcode-block" id="Specification.is_valid">
+<a class="viewcode-back" href="../../../../api/factory.html#factory.domain.parts.specification.Specification.is_valid">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Проверить корректность спецификации.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если поля непустые и допуск положительный.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_part_name</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tolerance</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="ow">and</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_surface_finish</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Сравнить две спецификации.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other: Другой объект.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если совпадают имя и допуск.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Specification</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_part_name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_part_name</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tolerance</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_tolerance</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть хеш спецификации.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Целое число.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_part_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tolerance</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть текстовое представление.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка с полями через запятую.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_part_name</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_tolerance</span><span class="si">}</span><span class="s2">, "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_surface_finish</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_material_type</span><span class="si">}</span><span class="s2">, "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_notes</span><span class="si">}</span><span class="s2">"</span>
+        <span class="p">)</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">PPOIS Lab 2</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Содержание</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/common.html">Общий код</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/factory.html">Домен завода</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Код модуля</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
