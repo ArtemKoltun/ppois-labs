@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>factory.domain.warehouse.warehouse &#8212; документация PPOIS Lab 2 0.1.0</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../../../_static/documentation_options.js?v=6ff560e8"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Исходный код factory.domain.warehouse.warehouse</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Склад.</span>
+
+<span class="sd">Module: factory.domain.warehouse.warehouse</span>
+<span class="sd">"""</span>
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Imports</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.abstract.readable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Readable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.abstract.writable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Writable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.domain.address</span><span class="w"> </span><span class="kn">import</span> <span class="n">Address</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">factory.domain.personnel.employee</span><span class="w"> </span><span class="kn">import</span> <span class="n">Employee</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Classes</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Warehouse">
+<a class="viewcode-back" href="../../../../api/factory.html#factory.domain.warehouse.warehouse.Warehouse">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Warehouse</span><span class="p">(</span><span class="n">Readable</span><span class="p">,</span> <span class="n">Writable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Склад завода.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _name: Наименование.</span>
+<span class="sd">        _address: Адрес.</span>
+<span class="sd">        _area: Площадь в м².</span>
+<span class="sd">        _manager: Заведующий складом.</span>
+<span class="sd">        _capacity: Максимальная ёмкость.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">address</span><span class="p">:</span> <span class="n">Address</span><span class="p">,</span>
+        <span class="n">area</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">capacity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">manager</span><span class="p">:</span> <span class="n">Employee</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Создать склад.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name: Наименование.</span>
+<span class="sd">            address: Адрес.</span>
+<span class="sd">            area: Площадь.</span>
+<span class="sd">            capacity: Ёмкость.</span>
+<span class="sd">            manager: Заведующий.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Если данные некорректны.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"имя склада не может быть пустым"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">area</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">capacity</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">"площадь и ёмкость должны быть положительными"</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_address</span><span class="p">:</span> <span class="n">Address</span> <span class="o">=</span> <span class="n">address</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_area</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">area</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_manager</span><span class="p">:</span> <span class="n">Employee</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">manager</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">capacity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_load</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"Warehouse"</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Разобрать склад из строки.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text: Строка с полями через точку с запятой.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Новый экземпляр.</span>
+<span class="sd">        """</span>
+        <span class="n">parts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">";"</span><span class="p">)]</span>
+        <span class="n">address</span><span class="p">:</span> <span class="n">Address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span>
+            <span class="n">country</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">city</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+            <span class="n">street</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+            <span class="n">building</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span>
+            <span class="n">postal_code</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">address</span><span class="o">=</span><span class="n">address</span><span class="p">,</span>
+            <span class="n">area</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">6</span><span class="p">]),</span>
+            <span class="n">capacity</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">7</span><span class="p">]),</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Наименование.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">capacity</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Ёмкость.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Число.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">current_load</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Текущая загрузка.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Число.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_load</span>
+
+<div class="viewcode-block" id="Warehouse.assign_manager">
+<a class="viewcode-back" href="../../../../api/factory.html#factory.domain.warehouse.warehouse.Warehouse.assign_manager">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">assign_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manager</span><span class="p">:</span> <span class="n">Employee</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Назначить заведующего.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            manager: Сотрудник.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_manager</span> <span class="o">=</span> <span class="n">manager</span></div>
+
+
+<div class="viewcode-block" id="Warehouse.has_manager">
+<a class="viewcode-back" href="../../../../api/factory.html#factory.domain.warehouse.warehouse.Warehouse.has_manager">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Проверить наличие заведующего.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если назначен.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_manager</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Warehouse.add_load">
+<a class="viewcode-back" href="../../../../api/factory.html#factory.domain.warehouse.warehouse.Warehouse.add_load">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Добавить груз на склад.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            amount: Количество.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Если превышена ёмкость.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_load</span> <span class="o">+</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"превышена ёмкость склада"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_load</span> <span class="o">+=</span> <span class="n">amount</span></div>
+
+
+<div class="viewcode-block" id="Warehouse.remove_load">
+<a class="viewcode-back" href="../../../../api/factory.html#factory.domain.warehouse.warehouse.Warehouse.remove_load">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Убрать груз со склада.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            amount: Количество.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_load</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_load</span> <span class="o">-</span> <span class="n">amount</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Warehouse.fill_ratio">
+<a class="viewcode-back" href="../../../../api/factory.html#factory.domain.warehouse.warehouse.Warehouse.fill_ratio">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fill_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Рассчитать заполненность склада.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Число от 0 до 1.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_load</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span></div>
+
+
+<div class="viewcode-block" id="Warehouse.is_full">
+<a class="viewcode-back" href="../../../../api/factory.html#factory.domain.warehouse.warehouse.Warehouse.is_full">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_full</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Проверить, полон ли склад.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если загрузка выше 95%.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fill_ratio</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mf">0.95</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Сравнить два склада.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other: Другой объект.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True`` при совпадении имени.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Warehouse</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть хеш.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Целое число.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть текстовое представление.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка с полями через точку с запятой.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="si">}</span><span class="s2">; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_address</span><span class="o">.</span><span class="n">country</span><span class="si">}</span><span class="s2">; "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_address</span><span class="o">.</span><span class="n">city</span><span class="si">}</span><span class="s2">; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_address</span><span class="o">.</span><span class="n">street</span><span class="si">}</span><span class="s2">; "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_address</span><span class="o">.</span><span class="n">building</span><span class="si">}</span><span class="s2">; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_address</span><span class="o">.</span><span class="n">postal_code</span><span class="si">}</span><span class="s2">; "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_area</span><span class="si">}</span><span class="s2">; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span><span class="si">}</span><span class="s2">"</span>
+        <span class="p">)</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">PPOIS Lab 2</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Содержание</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/common.html">Общий код</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api/factory.html">Домен завода</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Код модуля</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

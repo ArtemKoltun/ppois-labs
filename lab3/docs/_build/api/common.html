@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Общий код &#8212; документация PPOIS Lab 3 0.1.0</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=6ff560e8"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="../genindex.html" />
+    <link rel="search" title="Поиск" href="../search.html" />
+    <link rel="next" title="Домен социальной сети" href="social.html" />
+    <link rel="prev" title="PPOIS Lab 3" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-common.abstract.readable">
+<span id="id1"></span><h1>Общий код<a class="headerlink" href="#module-common.abstract.readable" title="Ссылка на этот заголовок">¶</a></h1>
+<p>Абстрактный интерфейс для чтения объекта из текстового потока.</p>
+<p>Module: common.abstract.readable</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.abstract.readable.Readable">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.abstract.readable.</span></span><span class="sig-name descname"><span class="pre">Readable</span></span><a class="reference internal" href="../_modules/common/abstract/readable.html#Readable"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.abstract.readable.Readable" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Объект, который можно прочитать из текстового потока.</p>
+<p>Наследники реализуют только <code class="xref py py-meth docutils literal notranslate"><span class="pre">_parse()</span></code>, а методы
+<a class="reference internal" href="#common.abstract.readable.Readable.from_stream" title="common.abstract.readable.Readable.from_stream"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_stream()</span></code></a> и <a class="reference internal" href="#common.abstract.readable.Readable.from_string" title="common.abstract.readable.Readable.from_string"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_string()</span></code></a> предоставляются
+базовым классом.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="common.abstract.readable.Readable.from_stream">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TextIO</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="../_modules/common/abstract/readable.html#Readable.from_stream"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.abstract.readable.Readable.from_stream" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Прочитать объект из текстового потока.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>stream</strong> – Открытый текстовый поток с методом <code class="docutils literal notranslate"><span class="pre">read()</span></code>.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Новый экземпляр класса, восстановленный из потока.</p>
+</dd>
+<dt class="field-odd">Исключение<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – Если содержимое потока не соответствует
+    формату.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.abstract.readable.Readable.from_string">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="../_modules/common/abstract/readable.html#Readable.from_string"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.abstract.readable.Readable.from_string" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Прочитать объект из строки.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> – Строка с текстовым представлением объекта.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Новый экземпляр класса, восстановленный из <code class="docutils literal notranslate"><span class="pre">text</span></code>.</p>
+</dd>
+<dt class="field-odd">Исключение<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – Если строка не соответствует формату.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-common.abstract.writable">Абстрактный интерфейс для записи объекта в текстовый поток.</p>
+<p>Module: common.abstract.writable</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.abstract.writable.Writable">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.abstract.writable.</span></span><span class="sig-name descname"><span class="pre">Writable</span></span><a class="reference internal" href="../_modules/common/abstract/writable.html#Writable"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.abstract.writable.Writable" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Объект, который можно записать в текстовый поток.</p>
+<p>Наследники реализуют <code class="docutils literal notranslate"><span class="pre">__str__</span></code>, а методы <a class="reference internal" href="#common.abstract.writable.Writable.to_stream" title="common.abstract.writable.Writable.to_stream"><code class="xref py py-meth docutils literal notranslate"><span class="pre">to_stream()</span></code></a>
+и <code class="xref py py-meth docutils literal notranslate"><span class="pre">__repr__()</span></code> предоставляются базовым классом.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="common.abstract.writable.Writable.to_stream">
+<span class="sig-name descname"><span class="pre">to_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TextIO</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/common/abstract/writable.html#Writable.to_stream"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.abstract.writable.Writable.to_stream" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Записать объект в текстовый поток.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>stream</strong> – Открытый текстовый поток с методом <code class="docutils literal notranslate"><span class="pre">write()</span></code>.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Ничего не возвращает.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-common.enums.user_role">Роль пользователя в социальной сети.</p>
+<p>Module: common.enums.user_role</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.enums.user_role.UserRole">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.enums.user_role.</span></span><span class="sig-name descname"><span class="pre">UserRole</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/enums/user_role.html#UserRole"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.enums.user_role.UserRole" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Роль пользователя в системе.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.user_role.UserRole.USER">
+<span class="sig-name descname"><span class="pre">USER</span></span><a class="headerlink" href="#common.enums.user_role.UserRole.USER" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Обычный пользователь.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.user_role.UserRole.MODERATOR">
+<span class="sig-name descname"><span class="pre">MODERATOR</span></span><a class="headerlink" href="#common.enums.user_role.UserRole.MODERATOR" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Модератор.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.user_role.UserRole.ADMIN">
+<span class="sig-name descname"><span class="pre">ADMIN</span></span><a class="headerlink" href="#common.enums.user_role.UserRole.ADMIN" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Администратор.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.user_role.UserRole.ADVERTISER">
+<span class="sig-name descname"><span class="pre">ADVERTISER</span></span><a class="headerlink" href="#common.enums.user_role.UserRole.ADVERTISER" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Рекламодатель.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">USER</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'user'</span></span><a class="headerlink" href="#id0" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">MODERATOR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'moderator'</span></span><a class="headerlink" href="#id2" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">ADMIN</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'admin'</span></span><a class="headerlink" href="#id3" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">ADVERTISER</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'advertiser'</span></span><a class="headerlink" href="#id4" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p id="module-common.enums.post_visibility">Видимость поста.</p>
+<p>Module: common.enums.post_visibility</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.enums.post_visibility.PostVisibility">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.enums.post_visibility.</span></span><span class="sig-name descname"><span class="pre">PostVisibility</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/enums/post_visibility.html#PostVisibility"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.enums.post_visibility.PostVisibility" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Кто может видеть пост.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.post_visibility.PostVisibility.PUBLIC">
+<span class="sig-name descname"><span class="pre">PUBLIC</span></span><a class="headerlink" href="#common.enums.post_visibility.PostVisibility.PUBLIC" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Все пользователи.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.post_visibility.PostVisibility.FRIENDS">
+<span class="sig-name descname"><span class="pre">FRIENDS</span></span><a class="headerlink" href="#common.enums.post_visibility.PostVisibility.FRIENDS" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Только друзья.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.post_visibility.PostVisibility.CLOSE_FRIENDS">
+<span class="sig-name descname"><span class="pre">CLOSE_FRIENDS</span></span><a class="headerlink" href="#common.enums.post_visibility.PostVisibility.CLOSE_FRIENDS" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Только близкие друзья.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.post_visibility.PostVisibility.PRIVATE">
+<span class="sig-name descname"><span class="pre">PRIVATE</span></span><a class="headerlink" href="#common.enums.post_visibility.PostVisibility.PRIVATE" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Только автор.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">PUBLIC</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'public'</span></span><a class="headerlink" href="#id5" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">FRIENDS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'friends'</span></span><a class="headerlink" href="#id6" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">CLOSE_FRIENDS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'close_friends'</span></span><a class="headerlink" href="#id7" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">PRIVATE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'private'</span></span><a class="headerlink" href="#id8" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p id="module-common.enums.notification_type">Тип уведомления.</p>
+<p>Module: common.enums.notification_type</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.enums.notification_type.NotificationType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.enums.notification_type.</span></span><span class="sig-name descname"><span class="pre">NotificationType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/enums/notification_type.html#NotificationType"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.enums.notification_type.NotificationType" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Тип уведомления.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.notification_type.NotificationType.LIKE">
+<span class="sig-name descname"><span class="pre">LIKE</span></span><a class="headerlink" href="#common.enums.notification_type.NotificationType.LIKE" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Лайк.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.notification_type.NotificationType.COMMENT">
+<span class="sig-name descname"><span class="pre">COMMENT</span></span><a class="headerlink" href="#common.enums.notification_type.NotificationType.COMMENT" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Комментарий.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.notification_type.NotificationType.FRIEND_REQUEST">
+<span class="sig-name descname"><span class="pre">FRIEND_REQUEST</span></span><a class="headerlink" href="#common.enums.notification_type.NotificationType.FRIEND_REQUEST" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Заявка в друзья.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.notification_type.NotificationType.MESSAGE">
+<span class="sig-name descname"><span class="pre">MESSAGE</span></span><a class="headerlink" href="#common.enums.notification_type.NotificationType.MESSAGE" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Сообщение.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.notification_type.NotificationType.MENTION">
+<span class="sig-name descname"><span class="pre">MENTION</span></span><a class="headerlink" href="#common.enums.notification_type.NotificationType.MENTION" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Упоминание.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.notification_type.NotificationType.SYSTEM">
+<span class="sig-name descname"><span class="pre">SYSTEM</span></span><a class="headerlink" href="#common.enums.notification_type.NotificationType.SYSTEM" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Системное.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">LIKE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'like'</span></span><a class="headerlink" href="#id9" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">COMMENT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'comment'</span></span><a class="headerlink" href="#id10" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">FRIEND_REQUEST</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'friend_request'</span></span><a class="headerlink" href="#id11" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">MESSAGE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'message'</span></span><a class="headerlink" href="#id12" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">MENTION</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mention'</span></span><a class="headerlink" href="#id13" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">SYSTEM</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'system'</span></span><a class="headerlink" href="#id14" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p id="module-common.enums.report_status">Статус жалобы.</p>
+<p>Module: common.enums.report_status</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.enums.report_status.ReportStatus">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.enums.report_status.</span></span><span class="sig-name descname"><span class="pre">ReportStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/enums/report_status.html#ReportStatus"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.enums.report_status.ReportStatus" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Статус рассмотрения жалобы.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.report_status.ReportStatus.PENDING">
+<span class="sig-name descname"><span class="pre">PENDING</span></span><a class="headerlink" href="#common.enums.report_status.ReportStatus.PENDING" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Ожидает рассмотрения.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.report_status.ReportStatus.IN_REVIEW">
+<span class="sig-name descname"><span class="pre">IN_REVIEW</span></span><a class="headerlink" href="#common.enums.report_status.ReportStatus.IN_REVIEW" title="Ссылка на это определение">¶</a></dt>
+<dd><p>На рассмотрении.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.report_status.ReportStatus.RESOLVED">
+<span class="sig-name descname"><span class="pre">RESOLVED</span></span><a class="headerlink" href="#common.enums.report_status.ReportStatus.RESOLVED" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Рассмотрена.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.report_status.ReportStatus.REJECTED">
+<span class="sig-name descname"><span class="pre">REJECTED</span></span><a class="headerlink" href="#common.enums.report_status.ReportStatus.REJECTED" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Отклонена.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">PENDING</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'pending'</span></span><a class="headerlink" href="#id15" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">IN_REVIEW</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'in_review'</span></span><a class="headerlink" href="#id16" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id17">
+<span class="sig-name descname"><span class="pre">RESOLVED</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'resolved'</span></span><a class="headerlink" href="#id17" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id18">
+<span class="sig-name descname"><span class="pre">REJECTED</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'rejected'</span></span><a class="headerlink" href="#id18" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p id="module-common.exceptions">Все исключения предметной области.</p>
+<p>Module: common.exceptions</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.AccountBlockedError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">AccountBlockedError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/user_exceptions.html#AccountBlockedError"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.AccountBlockedError" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.SocialNetworkError" title="common.exceptions.base.SocialNetworkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SocialNetworkError</span></code></a></p>
+<p>Аккаунт заблокирован.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.AdCampaignError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">AdCampaignError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/connection_exceptions.html#AdCampaignError"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.AdCampaignError" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.SocialNetworkError" title="common.exceptions.base.SocialNetworkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SocialNetworkError</span></code></a></p>
+<p>Ошибка рекламной кампании.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.ContentModerationError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">ContentModerationError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/content_exceptions.html#ContentModerationError"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.ContentModerationError" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.SocialNetworkError" title="common.exceptions.base.SocialNetworkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SocialNetworkError</span></code></a></p>
+<p>Ошибка модерации контента.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.FriendshipError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">FriendshipError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/connection_exceptions.html#FriendshipError"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.FriendshipError" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.SocialNetworkError" title="common.exceptions.base.SocialNetworkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SocialNetworkError</span></code></a></p>
+<p>Ошибка при работе с дружбой.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.InvalidCredentialsError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">InvalidCredentialsError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/user_exceptions.html#InvalidCredentialsError"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.InvalidCredentialsError" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.SocialNetworkError" title="common.exceptions.base.SocialNetworkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SocialNetworkError</span></code></a></p>
+<p>Неверные логин или пароль.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.InvalidPostError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">InvalidPostError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/content_exceptions.html#InvalidPostError"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.InvalidPostError" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.SocialNetworkError" title="common.exceptions.base.SocialNetworkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SocialNetworkError</span></code></a></p>
+<p>Некорректный пост.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.InvalidUserError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">InvalidUserError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/user_exceptions.html#InvalidUserError"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.InvalidUserError" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.SocialNetworkError" title="common.exceptions.base.SocialNetworkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SocialNetworkError</span></code></a></p>
+<p>Некорректные данные пользователя.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.MessageDeliveryError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">MessageDeliveryError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/connection_exceptions.html#MessageDeliveryError"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.MessageDeliveryError" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.SocialNetworkError" title="common.exceptions.base.SocialNetworkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SocialNetworkError</span></code></a></p>
+<p>Ошибка доставки сообщения.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.NotificationError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">NotificationError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/connection_exceptions.html#NotificationError"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.NotificationError" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.SocialNetworkError" title="common.exceptions.base.SocialNetworkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SocialNetworkError</span></code></a></p>
+<p>Ошибка при работе с уведомлениями.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.PrivacyViolationError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">PrivacyViolationError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/content_exceptions.html#PrivacyViolationError"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.PrivacyViolationError" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.SocialNetworkError" title="common.exceptions.base.SocialNetworkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SocialNetworkError</span></code></a></p>
+<p>Нарушение приватности.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.SocialNetworkError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">SocialNetworkError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/base.html#SocialNetworkError"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.SocialNetworkError" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Базовое исключение всех модулей проекта.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.exceptions.SocialNetworkError.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#common.exceptions.SocialNetworkError.message" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Текст сообщения об ошибке.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.UserNotFoundError">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">UserNotFoundError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/user_exceptions.html#UserNotFoundError"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.UserNotFoundError" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.SocialNetworkError" title="common.exceptions.base.SocialNetworkError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SocialNetworkError</span></code></a></p>
+<p>Пользователь не найден.</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PPOIS Lab 3</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Содержание</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Общий код</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#common.abstract.readable.Readable"><code class="docutils literal notranslate"><span class="pre">Readable</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.abstract.writable.Writable"><code class="docutils literal notranslate"><span class="pre">Writable</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.enums.user_role.UserRole"><code class="docutils literal notranslate"><span class="pre">UserRole</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.enums.post_visibility.PostVisibility"><code class="docutils literal notranslate"><span class="pre">PostVisibility</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.enums.notification_type.NotificationType"><code class="docutils literal notranslate"><span class="pre">NotificationType</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.enums.report_status.ReportStatus"><code class="docutils literal notranslate"><span class="pre">ReportStatus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.AccountBlockedError"><code class="docutils literal notranslate"><span class="pre">AccountBlockedError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.AdCampaignError"><code class="docutils literal notranslate"><span class="pre">AdCampaignError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.ContentModerationError"><code class="docutils literal notranslate"><span class="pre">ContentModerationError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.FriendshipError"><code class="docutils literal notranslate"><span class="pre">FriendshipError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.InvalidCredentialsError"><code class="docutils literal notranslate"><span class="pre">InvalidCredentialsError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.InvalidPostError"><code class="docutils literal notranslate"><span class="pre">InvalidPostError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.InvalidUserError"><code class="docutils literal notranslate"><span class="pre">InvalidUserError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.MessageDeliveryError"><code class="docutils literal notranslate"><span class="pre">MessageDeliveryError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.NotificationError"><code class="docutils literal notranslate"><span class="pre">NotificationError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.PrivacyViolationError"><code class="docutils literal notranslate"><span class="pre">PrivacyViolationError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.SocialNetworkError"><code class="docutils literal notranslate"><span class="pre">SocialNetworkError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.UserNotFoundError"><code class="docutils literal notranslate"><span class="pre">UserNotFoundError</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="social.html">Домен социальной сети</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="предыдущая глава">PPOIS Lab 3</a></li>
+      <li>Next: <a href="social.html" title="следующая глава">Домен социальной сети</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/api/common.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

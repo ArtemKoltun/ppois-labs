@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>turing_machine.domain.transition &#8212; документация PPOIS Lab 1 0.1.0</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../../_static/documentation_options.js?v=6ff560e8"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Исходный код turing_machine.domain.transition</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Правило перехода машины Тьюринга.</span>
+
+<span class="sd">Module: turing_machine.domain.transition</span>
+<span class="sd">"""</span>
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Imports</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">SYMBOL_LENGTH</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">turing_machine.domain.abstract.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractRule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">turing_machine.domain.direction</span><span class="w"> </span><span class="kn">import</span> <span class="n">Direction</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Constants</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="n">_TRANSITION_PARTS</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="sd">"""Число полей в текстовом представлении правила."""</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Classes</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Transition">
+<a class="viewcode-back" href="../../../api/turing_machine.html#turing_machine.domain.transition.Transition">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Transition</span><span class="p">(</span><span class="n">AbstractRule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Правило перехода машины Тьюринга.</span>
+
+<span class="sd">    Правило задаёт: в состоянии ``current_state`` при чтении</span>
+<span class="sd">    ``read_symbol`` перейти в ``next_state``, записать ``write_symbol``</span>
+<span class="sd">    и сдвинуть каретку в направлении ``direction``.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _current_state: Состояние, в котором применимо правило.</span>
+<span class="sd">        _read_symbol: Символ, который должно прочитать правило.</span>
+<span class="sd">        _next_state: Состояние, в которое переходит машина.</span>
+<span class="sd">        _write_symbol: Символ, который записывается на ленту.</span>
+<span class="sd">        _direction: Направление сдвига каретки.</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Constructors</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">current_state</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">read_symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">next_state</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">write_symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">direction</span><span class="p">:</span> <span class="n">Direction</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Создать правило перехода.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            current_state: Состояние, в котором применимо правило.</span>
+<span class="sd">            read_symbol: Символ, который должно прочитать правило.</span>
+<span class="sd">            next_state: Состояние, в которое переходит машина.</span>
+<span class="sd">            write_symbol: Символ, который записывается на ленту.</span>
+<span class="sd">            direction: Направление сдвига каретки.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Если символы не длиной 1 или состояния пусты.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_state</span><span class="p">(</span><span class="n">current_state</span><span class="p">,</span> <span class="s2">"текущее состояние"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_state</span><span class="p">(</span><span class="n">next_state</span><span class="p">,</span> <span class="s2">"следующее состояние"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_symbol</span><span class="p">(</span><span class="n">read_symbol</span><span class="p">,</span> <span class="s2">"читаемый символ"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_symbol</span><span class="p">(</span><span class="n">write_symbol</span><span class="p">,</span> <span class="s2">"записываемый символ"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">current_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_read_symbol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">read_symbol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_next_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">next_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_symbol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">write_symbol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_direction</span><span class="p">:</span> <span class="n">Direction</span> <span class="o">=</span> <span class="n">direction</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Разобрать строку вида ``"q0 1 q1 0 R"``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text: Текстовое представление правила.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Новый экземпляр :class:`Transition`.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Если число полей не равно пяти.</span>
+<span class="sd">        """</span>
+        <span class="n">parts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">!=</span> <span class="n">_TRANSITION_PARTS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"правило должно содержать </span><span class="si">{</span><span class="n">_TRANSITION_PARTS</span><span class="si">}</span><span class="s2"> полей, "</span>
+                <span class="sa">f</span><span class="s2">"получено </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">current_state</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">read_symbol</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">next_state</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+            <span class="n">write_symbol</span><span class="o">=</span><span class="n">parts</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+            <span class="n">direction</span><span class="o">=</span><span class="n">Direction</span><span class="o">.</span><span class="n">from_char</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">4</span><span class="p">]),</span>
+        <span class="p">)</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Private methods</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_state</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Проверить, что имя состояния непусто.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state: Проверяемое значение.</span>
+<span class="sd">            name: Имя поля для сообщения об ошибке.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Если строка пуста.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">state</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> не может быть пустым"</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_symbol</span><span class="p">(</span><span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Проверить, что символ имеет длину 1.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            symbol: Проверяемое значение.</span>
+<span class="sd">            name: Имя поля для сообщения об ошибке.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Если длина ``symbol`` не равна 1.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span> <span class="o">!=</span> <span class="n">SYMBOL_LENGTH</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> должен быть длиной </span><span class="si">{</span><span class="n">SYMBOL_LENGTH</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Properties</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">current_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Состояние, в котором применимо правило.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Имя состояния.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_state</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">read_symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Символ, который должно прочитать правило.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка длиной 1.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_symbol</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">next_state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Состояние, в которое переходит машина.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Имя состояния.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_state</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Символ, который записывается на ленту.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка длиной 1.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_write_symbol</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">direction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Direction</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Направление сдвига каретки.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Элемент перечисления :class:`Direction`.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_direction</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Public methods</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Transition.matches">
+<a class="viewcode-back" href="../../../api/turing_machine.html#turing_machine.domain.transition.Transition.matches">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Проверить применимость правила к паре (состояние, символ).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state: Текущее состояние машины.</span>
+<span class="sd">            symbol: Символ, прочитанный с ленты.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если правило применимо.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_state</span> <span class="o">==</span> <span class="n">state</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_symbol</span> <span class="o">==</span> <span class="n">symbol</span>
+        <span class="p">)</span></div>
+
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Magic methods</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Сравнить два правила на равенство.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other: Другой объект для сравнения.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если все пять полей совпадают.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Transition</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_state</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_current_state</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_symbol</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_read_symbol</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_state</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_next_state</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_write_symbol</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_write_symbol</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_direction</span> <span class="ow">is</span> <span class="n">other</span><span class="o">.</span><span class="n">_direction</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть хеш правила.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Целое число — хеш всех полей правила.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_current_state</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_read_symbol</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_next_state</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_write_symbol</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_direction</span><span class="p">,</span>
+        <span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть текстовое представление правила.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка вида ``"q0 1 q1 0 R"``.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_state</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_symbol</span><span class="si">}</span><span class="s2"> "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_next_state</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_write_symbol</span><span class="si">}</span><span class="s2"> "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_direction</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">"</span>
+        <span class="p">)</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">PPOIS Lab 1</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Код модуля</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

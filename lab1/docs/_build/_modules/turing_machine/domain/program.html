@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>turing_machine.domain.program &#8212; документация PPOIS Lab 1 0.1.0</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../../_static/documentation_options.js?v=6ff560e8"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Исходный код turing_machine.domain.program</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Программа машины Тьюринга.</span>
+
+<span class="sd">Module: turing_machine.domain.program</span>
+<span class="sd">"""</span>
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Imports</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.abstract.readable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Readable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.abstract.writable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Writable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">turing_machine.domain.transition</span><span class="w"> </span><span class="kn">import</span> <span class="n">Transition</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Classes</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Program">
+<a class="viewcode-back" href="../../../api/turing_machine.html#turing_machine.domain.program.Program">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Program</span><span class="p">(</span><span class="n">Readable</span><span class="p">,</span> <span class="n">Writable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Упорядоченный набор правил машины Тьюринга.</span>
+
+<span class="sd">    Порядок правил сохраняется в порядке добавления. Поиск правила</span>
+<span class="sd">    выполняется линейно по списку.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _rules: Список правил программы.</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Constructors</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rules</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Transition</span><span class="p">]</span> <span class="o">=</span> <span class="p">())</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Создать программу из набора правил.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rules: Итерируемый объект с правилами.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rules</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Transition</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rules</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Разобрать программу из многострочного текста.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text: Текст, по одному правилу на строку.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Новый экземпляр :class:`Program`.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Если хотя бы одна строка не является правилом.</span>
+<span class="sd">        """</span>
+        <span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="p">]</span>
+        <span class="n">rules</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Transition</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">Transition</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">rules</span><span class="p">)</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Properties</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rules</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Transition</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Правила программы в порядке добавления.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Кортеж правил.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rules</span><span class="p">)</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Public methods</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Program.add_rule">
+<a class="viewcode-back" href="../../../api/turing_machine.html#turing_machine.domain.program.Program.add_rule">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule</span><span class="p">:</span> <span class="n">Transition</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Добавить правило в конец программы.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rule: Добавляемое правило.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Program.remove_rule">
+<a class="viewcode-back" href="../../../api/turing_machine.html#turing_machine.domain.program.Program.remove_rule">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Удалить правило по индексу.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index: Индекс правила в программе.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            IndexError: Если индекс вне диапазона.</span>
+<span class="sd">        """</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rules</span><span class="p">[</span><span class="n">index</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Program.find">
+<a class="viewcode-back" href="../../../api/turing_machine.html#turing_machine.domain.program.Program.find">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Transition</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Найти первое правило, применимое к паре (состояние, символ).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state: Текущее состояние машины.</span>
+<span class="sd">            symbol: Символ, прочитанный с ленты.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Найденное правило или ``None``, если ничего не подошло.</span>
+<span class="sd">        """</span>
+        <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rules</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">rule</span><span class="o">.</span><span class="n">matches</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">rule</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Magic methods</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Transition</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Итерироваться по правилам программы.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Итератор по правилам.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rules</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть число правил в программе.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Количество правил.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rules</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Сравнить две программы на равенство.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other: Другой объект для сравнения.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если списки правил совпадают.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Program</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rules</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_rules</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть хеш программы.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Целое число — хеш кортежа правил.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rules</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть текстовое представление программы.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка с правилами, по одному на строку.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span> <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rules</span><span class="p">)</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">PPOIS Lab 1</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Код модуля</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

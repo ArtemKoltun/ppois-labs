@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>turing_machine.domain.machine &#8212; документация PPOIS Lab 1 0.1.0</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../../_static/documentation_options.js?v=6ff560e8"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Исходный код turing_machine.domain.machine</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Машина Тьюринга.</span>
+
+<span class="sd">Module: turing_machine.domain.machine</span>
+<span class="sd">"""</span>
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Imports</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.abstract.readable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Readable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.abstract.writable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Writable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_BLANK</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_HEAD_POSITION</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_MAX_STEPS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.domain.alphabet</span><span class="w"> </span><span class="kn">import</span> <span class="n">Alphabet</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.enums.machine_status</span><span class="w"> </span><span class="kn">import</span> <span class="n">MachineStatus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">StepLimitExceeded</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">turing_machine.domain.head</span><span class="w"> </span><span class="kn">import</span> <span class="n">Head</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">turing_machine.domain.program</span><span class="w"> </span><span class="kn">import</span> <span class="n">Program</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">turing_machine.domain.transition</span><span class="w"> </span><span class="kn">import</span> <span class="n">Transition</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">turing_machine.domain.unbounded_tape</span><span class="w"> </span><span class="kn">import</span> <span class="n">UnboundedTape</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Classes</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="TuringMachine">
+<a class="viewcode-back" href="../../../api/turing_machine.html#turing_machine.domain.machine.TuringMachine">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TuringMachine</span><span class="p">(</span><span class="n">Readable</span><span class="p">,</span> <span class="n">Writable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Машина Тьюринга: лента, каретка, программа и состояния.</span>
+
+<span class="sd">    Машина координирует работу доменных объектов: читает символ под</span>
+<span class="sd">    кареткой, ищет правило в программе, записывает новый символ,</span>
+<span class="sd">    двигает каретку и меняет текущее состояние.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _alphabet: Алфавит машины.</span>
+<span class="sd">        _tape: Лента машины.</span>
+<span class="sd">        _head: Каретка.</span>
+<span class="sd">        _program: Программа машины.</span>
+<span class="sd">        _initial_state: Начальное состояние.</span>
+<span class="sd">        _final_states: Множество конечных состояний.</span>
+<span class="sd">        _initial_tape: Снимок начального содержимого ленты.</span>
+<span class="sd">        _initial_head: Снимок начальной позиции каретки.</span>
+<span class="sd">        _state: Текущее состояние.</span>
+<span class="sd">        _steps: Число успешно выполненных шагов.</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Constructors</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">alphabet</span><span class="p">:</span> <span class="n">Alphabet</span><span class="p">,</span>
+        <span class="n">tape</span><span class="p">:</span> <span class="n">UnboundedTape</span><span class="p">,</span>
+        <span class="n">head</span><span class="p">:</span> <span class="n">Head</span><span class="p">,</span>
+        <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
+        <span class="n">initial_state</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">final_states</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Создать машину Тьюринга из готовых доменных объектов.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            alphabet: Алфавит машины.</span>
+<span class="sd">            tape: Лента машины.</span>
+<span class="sd">            head: Каретка.</span>
+<span class="sd">            program: Программа машины.</span>
+<span class="sd">            initial_state: Начальное состояние.</span>
+<span class="sd">            final_states: Множество конечных состояний.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">:</span> <span class="n">Alphabet</span> <span class="o">=</span> <span class="n">alphabet</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tape</span><span class="p">:</span> <span class="n">UnboundedTape</span> <span class="o">=</span> <span class="n">tape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_head</span><span class="p">:</span> <span class="n">Head</span> <span class="o">=</span> <span class="n">head</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">:</span> <span class="n">Program</span> <span class="o">=</span> <span class="n">program</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">initial_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_final_states</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">final_states</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_tape</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tape</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_head</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">position</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">initial_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Разобрать машину из JSON-описания.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text: JSON-строка с полями ``alphabet``, ``transitions``,</span>
+<span class="sd">                ``initial_state``, ``final_states`` и опциональными</span>
+<span class="sd">                ``blank``, ``initial_tape``, ``initial_head``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Новый экземпляр :class:`TuringMachine`.</span>
+<span class="sd">        """</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">alphabet</span><span class="o">=</span><span class="n">Alphabet</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"alphabet"</span><span class="p">]),</span>
+            <span class="n">tape</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">_tape_from_data</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+            <span class="n">head</span><span class="o">=</span><span class="n">Head</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"initial_head"</span><span class="p">,</span> <span class="n">DEFAULT_HEAD_POSITION</span><span class="p">)),</span>
+            <span class="n">program</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">_program_from_data</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+            <span class="n">initial_state</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">"initial_state"</span><span class="p">],</span>
+            <span class="n">final_states</span><span class="o">=</span><span class="nb">set</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"final_states"</span><span class="p">]),</span>
+        <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_tape_from_data</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">UnboundedTape</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Создать ленту из словаря с описанием машины.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: Словарь с полями ``blank`` и ``initial_tape``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Новая лента.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">UnboundedTape</span><span class="p">(</span>
+            <span class="n">blank</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"blank"</span><span class="p">,</span> <span class="n">DEFAULT_BLANK</span><span class="p">),</span>
+            <span class="n">initial</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"initial_tape"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_program_from_data</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Создать программу из словаря с описанием машины.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: Словарь с полем ``transitions`` — списком строк.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Новая программа.</span>
+<span class="sd">        """</span>
+        <span class="n">rules</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Transition</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">Transition</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">"transitions"</span><span class="p">]</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="n">rules</span><span class="p">)</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Properties</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Текущее состояние машины.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Имя состояния.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">steps</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Число успешно выполненных шагов.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Неотрицательное целое число.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MachineStatus</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Текущий статус машины.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :attr:`MachineStatus.HALTED`, если машина остановлена;</span>
+<span class="sd">            :attr:`MachineStatus.NOT_STARTED`, если не сделано ни</span>
+<span class="sd">            одного шага; иначе :attr:`MachineStatus.RUNNING`.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">halted</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MachineStatus</span><span class="o">.</span><span class="n">HALTED</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MachineStatus</span><span class="o">.</span><span class="n">NOT_STARTED</span>
+        <span class="k">return</span> <span class="n">MachineStatus</span><span class="o">.</span><span class="n">RUNNING</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">halted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Признак остановки машины.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если машина в конечном состоянии или нет</span>
+<span class="sd">            применимого правила.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_final_states</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tape</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_head</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">alphabet</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alphabet</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Алфавит машины.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Объект алфавита.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tape</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UnboundedTape</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Лента машины.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Объект ленты.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tape</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">head</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Head</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Каретка машины.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Объект каретки.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_head</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">program</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Программа машины.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Объект программы.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Public methods</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="TuringMachine.step">
+<a class="viewcode-back" href="../../../api/turing_machine.html#turing_machine.domain.machine.TuringMachine.step">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Выполнить один шаг интерпретации.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если шаг был выполнен; ``False``, если машина</span>
+<span class="sd">            остановилась.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_final_states</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">symbol</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tape</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_head</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+        <span class="n">rule</span><span class="p">:</span> <span class="n">Transition</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rule</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tape</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_head</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="n">rule</span><span class="o">.</span><span class="n">write_symbol</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_head</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">rule</span><span class="o">.</span><span class="n">direction</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">rule</span><span class="o">.</span><span class="n">next_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="TuringMachine.run">
+<a class="viewcode-back" href="../../../api/turing_machine.html#turing_machine.domain.machine.TuringMachine.run">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_MAX_STEPS</span><span class="p">,</span>
+        <span class="n">on_step</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">TuringMachine</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Выполнять шаги до остановки или до лимита.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            max_steps: Максимальное число шагов.</span>
+<span class="sd">            on_step: Необязательный callback, вызываемый после</span>
+<span class="sd">                каждого успешного шага.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            StepLimitExceeded: Если машина не остановилась за</span>
+<span class="sd">                ``max_steps`` шагов.</span>
+<span class="sd">        """</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_steps</span><span class="p">):</span>
+            <span class="n">before</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span>
+            <span class="n">moved</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span> <span class="o">&gt;</span> <span class="n">before</span> <span class="ow">and</span> <span class="n">on_step</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">on_step</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">moved</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="k">raise</span> <span class="n">StepLimitExceeded</span><span class="p">(</span><span class="n">max_steps</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TuringMachine.reset">
+<a class="viewcode-back" href="../../../api/turing_machine.html#turing_machine.domain.machine.TuringMachine.reset">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть машину в начальное состояние.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tape</span> <span class="o">=</span> <span class="n">UnboundedTape</span><span class="p">(</span>
+            <span class="n">blank</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_tape</span><span class="o">.</span><span class="n">blank</span><span class="p">,</span>
+            <span class="n">initial</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_initial_tape</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_head</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_initial_head</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initial_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Magic methods</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть JSON-представление машины.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка с описанием начальной конфигурации машины.</span>
+<span class="sd">        """</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"alphabet"</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">),</span>
+            <span class="s2">"blank"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tape</span><span class="o">.</span><span class="n">blank</span><span class="p">,</span>
+            <span class="s2">"initial_tape"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initial_tape</span><span class="p">,</span>
+            <span class="s2">"initial_head"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initial_head</span><span class="p">,</span>
+            <span class="s2">"initial_state"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initial_state</span><span class="p">,</span>
+            <span class="s2">"final_states"</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_final_states</span><span class="p">),</span>
+            <span class="s2">"transitions"</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="o">.</span><span class="n">rules</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">PPOIS Lab 1</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Код модуля</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

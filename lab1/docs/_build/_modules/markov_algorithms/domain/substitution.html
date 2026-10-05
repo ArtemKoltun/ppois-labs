@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>markov_algorithms.domain.substitution &#8212; документация PPOIS Lab 1 0.1.0</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../../_static/documentation_options.js?v=6ff560e8"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Исходный код markov_algorithms.domain.substitution</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Правило подстановки нормального алгорифма Маркова.</span>
+
+<span class="sd">Module: markov_algorithms.domain.substitution</span>
+<span class="sd">"""</span>
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Imports</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">markov_algorithms.domain.abstract.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractRule</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Constants</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="n">_ARROW</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"-&gt;"</span>
+<span class="sd">"""Разделитель левой и правой частей правила."""</span>
+
+<span class="n">_FINAL_MARKER</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"."</span>
+<span class="sd">"""Маркер заключительного правила сразу после стрелки."""</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Classes</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Substitution">
+<a class="viewcode-back" href="../../../api/markov_algorithms.html#markov_algorithms.domain.substitution.Substitution">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Substitution</span><span class="p">(</span><span class="n">AbstractRule</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Правило подстановки нормального алгорифма Маркова.</span>
+
+<span class="sd">    Обычное правило заменяет первое вхождение ``left`` на ``right``,</span>
+<span class="sd">    после чего алгоритм продолжает работу с начала списка правил.</span>
+<span class="sd">    Заключительное правило заменяет и останавливает алгоритм.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _left: Левая часть правила.</span>
+<span class="sd">        _right: Правая часть правила.</span>
+<span class="sd">        _is_final: Признак заключительного правила.</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Constructors</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">left</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">right</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">is_final</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Создать правило подстановки.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            left: Левая часть правила.</span>
+<span class="sd">            right: Правая часть правила.</span>
+<span class="sd">            is_final: ``True`` для заключительного правила.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Если обе части пусты одновременно.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">left</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">right</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">"обе части правила не могут быть пустыми"</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_left</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">left</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_right</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">right</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_final</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">is_final</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Разобрать строку вида ``"ab -&gt; ba"`` или ``"ab -&gt;. ba"``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text: Текстовое представление правила.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Новый экземпляр :class:`Substitution`.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: Если строка не содержит стрелку.</span>
+<span class="sd">        """</span>
+        <span class="n">stripped</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">_ARROW</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stripped</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"в правиле нет разделителя </span><span class="si">{</span><span class="n">_ARROW</span><span class="si">!r}</span><span class="s2">"</span>
+            <span class="p">)</span>
+        <span class="n">left_raw</span><span class="p">,</span> <span class="n">right_raw</span> <span class="o">=</span> <span class="n">stripped</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">_ARROW</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">is_final</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">right_raw</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">_FINAL_MARKER</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_final</span><span class="p">:</span>
+            <span class="n">right_raw</span> <span class="o">=</span> <span class="n">right_raw</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">_FINAL_MARKER</span><span class="p">):]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">left</span><span class="o">=</span><span class="n">left_raw</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
+            <span class="n">right</span><span class="o">=</span><span class="n">right_raw</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
+            <span class="n">is_final</span><span class="o">=</span><span class="n">is_final</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Properties</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">left</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Левая часть правила — что ищем.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка символов.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">right</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Правая часть правила — на что заменяем.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка символов.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_final</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Признак заключительного правила.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если правило заключительное.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_final</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Public methods</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="Substitution.matches">
+<a class="viewcode-back" href="../../../api/markov_algorithms.html#markov_algorithms.domain.substitution.Substitution.matches">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">matches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Проверить, входит ли левая часть в слово.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            word: Слово, к которому применяется правило.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если левая часть входит в слово.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left</span> <span class="ow">in</span> <span class="n">word</span></div>
+
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Magic methods</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Сравнить два правила на равенство.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other: Другой объект для сравнения.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если все поля совпадают.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Substitution</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_left</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_left</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_right</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_final</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_is_final</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть хеш правила.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Целое число — хеш тройки (left, right, is_final).</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_left</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_final</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть текстовое представление правила.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка вида ``"ab -&gt; ba"`` или ``"ab -&gt;. ba"``.</span>
+<span class="sd">        """</span>
+        <span class="n">arrow</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">_ARROW</span><span class="si">}{</span><span class="n">_FINAL_MARKER</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_final</span> <span class="k">else</span> <span class="n">_ARROW</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_left</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">arrow</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_right</span><span class="si">}</span><span class="s2">"</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">PPOIS Lab 1</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Код модуля</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

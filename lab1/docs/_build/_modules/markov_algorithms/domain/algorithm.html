@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>markov_algorithms.domain.algorithm &#8212; документация PPOIS Lab 1 0.1.0</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../../_static/documentation_options.js?v=6ff560e8"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Исходный код markov_algorithms.domain.algorithm</h1><div class="highlight"><pre>
+<span></span><span class="sd">"""</span>
+<span class="sd">Нормальный алгорифм Маркова.</span>
+
+<span class="sd">Module: markov_algorithms.domain.algorithm</span>
+<span class="sd">"""</span>
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Imports</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Self</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.abstract.readable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Readable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.abstract.writable</span><span class="w"> </span><span class="kn">import</span> <span class="n">Writable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEFAULT_MAX_STEPS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.domain.alphabet</span><span class="w"> </span><span class="kn">import</span> <span class="n">Alphabet</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.enums.machine_status</span><span class="w"> </span><span class="kn">import</span> <span class="n">MachineStatus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">common.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">StepLimitExceeded</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">markov_algorithms.domain.program</span><span class="w"> </span><span class="kn">import</span> <span class="n">Program</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">markov_algorithms.domain.substitution</span><span class="w"> </span><span class="kn">import</span> <span class="n">Substitution</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">markov_algorithms.domain.word</span><span class="w"> </span><span class="kn">import</span> <span class="n">Word</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Classes</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="MarkovAlgorithm">
+<a class="viewcode-back" href="../../../api/markov_algorithms.html#markov_algorithms.domain.algorithm.MarkovAlgorithm">[документация]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MarkovAlgorithm</span><span class="p">(</span><span class="n">Readable</span><span class="p">,</span> <span class="n">Writable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Нормальный алгорифм Маркова: слово и программа подстановок.</span>
+
+<span class="sd">    Алгоритм координирует работу доменных объектов: ищет первое</span>
+<span class="sd">    подходящее правило, применяет подстановку, решает, продолжать</span>
+<span class="sd">    или остановиться.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _alphabet: Алфавит алгорифма.</span>
+<span class="sd">        _program: Программа подстановок.</span>
+<span class="sd">        _initial_word: Снимок начального слова.</span>
+<span class="sd">        _word: Текущее слово.</span>
+<span class="sd">        _steps: Число успешно выполненных шагов.</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Constructors</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">alphabet</span><span class="p">:</span> <span class="n">Alphabet</span><span class="p">,</span>
+        <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
+        <span class="n">initial_word</span><span class="p">:</span> <span class="n">Word</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Создать алгорифм из готовых доменных объектов.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            alphabet: Алфавит алгорифма.</span>
+<span class="sd">            program: Программа подстановок.</span>
+<span class="sd">            initial_word: Начальное слово.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">:</span> <span class="n">Alphabet</span> <span class="o">=</span> <span class="n">alphabet</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="p">:</span> <span class="n">Program</span> <span class="o">=</span> <span class="n">program</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_word</span><span class="p">:</span> <span class="n">Word</span> <span class="o">=</span> <span class="n">initial_word</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_word</span><span class="p">:</span> <span class="n">Word</span> <span class="o">=</span> <span class="n">initial_word</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parse</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Разобрать алгорифм из JSON-описания.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text: JSON-строка с полями ``alphabet``, ``rules``</span>
+<span class="sd">                и ``initial_word``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Новый экземпляр :class:`MarkovAlgorithm`.</span>
+<span class="sd">        """</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">alphabet</span><span class="o">=</span><span class="n">Alphabet</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"alphabet"</span><span class="p">]),</span>
+            <span class="n">program</span><span class="o">=</span><span class="n">Program</span><span class="p">([</span>
+                <span class="n">Substitution</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">"rules"</span><span class="p">]</span>
+            <span class="p">]),</span>
+            <span class="n">initial_word</span><span class="o">=</span><span class="n">Word</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"initial_word"</span><span class="p">]),</span>
+        <span class="p">)</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Properties</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">word</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Word</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Текущее слово.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Объект слова.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_word</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">program</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Программа подстановок.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Объект программы.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">steps</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Число выполненных шагов.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Неотрицательное целое число.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">halted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Признак остановки алгорифма.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если ни одно правило не применимо.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_word</span><span class="o">.</span><span class="n">symbols</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">alphabet</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Alphabet</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Алфавит алгорифма.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Объект алфавита.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span>
+
+<div class="viewcode-block" id="MarkovAlgorithm.set_word">
+<a class="viewcode-back" href="../../../api/markov_algorithms.html#markov_algorithms.domain.algorithm.MarkovAlgorithm.set_word">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_word</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">:</span> <span class="n">Word</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Заменить текущее слово.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            word: Новое слово.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_word</span> <span class="o">=</span> <span class="n">word</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MachineStatus</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Текущий статус алгорифма.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :attr:`MachineStatus.HALTED`, :attr:`MachineStatus.RUNNING`</span>
+<span class="sd">            или :attr:`MachineStatus.NOT_STARTED`.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">halted</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MachineStatus</span><span class="o">.</span><span class="n">HALTED</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">MachineStatus</span><span class="o">.</span><span class="n">NOT_STARTED</span>
+        <span class="k">return</span> <span class="n">MachineStatus</span><span class="o">.</span><span class="n">RUNNING</span>
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Public methods</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="MarkovAlgorithm.step">
+<a class="viewcode-back" href="../../../api/markov_algorithms.html#markov_algorithms.domain.algorithm.MarkovAlgorithm.step">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Выполнить один шаг подстановки.</span>
+
+<span class="sd">        Находит первое подходящее правило, заменяет первое вхождение</span>
+<span class="sd">        левой части на правую. Возвращает ``False``, если правило</span>
+<span class="sd">        заключительное или подходящего правила нет.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ``True``, если нужно продолжить выполнение.</span>
+<span class="sd">        """</span>
+        <span class="n">rule</span><span class="p">:</span> <span class="n">Substitution</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="o">.</span><span class="n">find</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_word</span><span class="o">.</span><span class="n">symbols</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">rule</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_word</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_word</span><span class="o">.</span><span class="n">replace_first</span><span class="p">(</span><span class="n">rule</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">rule</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">rule</span><span class="o">.</span><span class="n">is_final</span></div>
+
+
+<div class="viewcode-block" id="MarkovAlgorithm.run">
+<a class="viewcode-back" href="../../../api/markov_algorithms.html#markov_algorithms.domain.algorithm.MarkovAlgorithm.run">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">max_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT_MAX_STEPS</span><span class="p">,</span>
+        <span class="n">on_step</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">MarkovAlgorithm</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Выполнять шаги до остановки или до лимита.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            max_steps: Максимальное число шагов.</span>
+<span class="sd">            on_step: Необязательный callback, вызываемый после</span>
+<span class="sd">                каждого успешного шага.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            StepLimitExceeded: Если алгорифм не остановился за</span>
+<span class="sd">                ``max_steps`` шагов.</span>
+<span class="sd">        """</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_steps</span><span class="p">):</span>
+            <span class="n">before</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span>
+            <span class="n">moved</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span> <span class="o">&gt;</span> <span class="n">before</span> <span class="ow">and</span> <span class="n">on_step</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">on_step</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">moved</span><span class="p">:</span>
+                <span class="k">return</span>
+        <span class="k">raise</span> <span class="n">StepLimitExceeded</span><span class="p">(</span><span class="n">max_steps</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MarkovAlgorithm.reset">
+<a class="viewcode-back" href="../../../api/markov_algorithms.html#markov_algorithms.domain.algorithm.MarkovAlgorithm.reset">[документация]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть алгорифм в начальное состояние.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Ничего не возвращает.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_word</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initial_word</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_steps</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+    <span class="c1"># -----------------------------------------------------------------------</span>
+    <span class="c1"># Magic methods</span>
+    <span class="c1"># -----------------------------------------------------------------------</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Вернуть JSON-представление алгорифма.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Строка с описанием начальной конфигурации алгорифма.</span>
+<span class="sd">        """</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"alphabet"</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_alphabet</span><span class="p">),</span>
+            <span class="s2">"initial_word"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_initial_word</span><span class="p">),</span>
+            <span class="s2">"rules"</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_program</span><span class="o">.</span><span class="n">rules</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">PPOIS Lab 1</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Код модуля</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

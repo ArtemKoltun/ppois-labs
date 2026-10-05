@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Общий код &#8212; документация PPOIS Lab 2 0.1.0</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=27fed22d" />
+    <script src="../_static/documentation_options.js?v=6ff560e8"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="../genindex.html" />
+    <link rel="search" title="Поиск" href="../search.html" />
+    <link rel="next" title="Домен завода" href="factory.html" />
+    <link rel="prev" title="PPOIS Lab 2" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-common.abstract.readable">
+<span id="id1"></span><h1>Общий код<a class="headerlink" href="#module-common.abstract.readable" title="Ссылка на этот заголовок">¶</a></h1>
+<p>Абстрактный интерфейс для чтения объекта из текстового потока.</p>
+<p>Module: common.abstract.readable</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.abstract.readable.Readable">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.abstract.readable.</span></span><span class="sig-name descname"><span class="pre">Readable</span></span><a class="reference internal" href="../_modules/common/abstract/readable.html#Readable"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.abstract.readable.Readable" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Объект, который можно прочитать из текстового потока.</p>
+<p>Наследники реализуют только <code class="xref py py-meth docutils literal notranslate"><span class="pre">_parse()</span></code>, а методы
+<a class="reference internal" href="#common.abstract.readable.Readable.from_stream" title="common.abstract.readable.Readable.from_stream"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_stream()</span></code></a> и <a class="reference internal" href="#common.abstract.readable.Readable.from_string" title="common.abstract.readable.Readable.from_string"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_string()</span></code></a> предоставляются
+базовым классом.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="common.abstract.readable.Readable.from_stream">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TextIO</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="../_modules/common/abstract/readable.html#Readable.from_stream"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.abstract.readable.Readable.from_stream" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Прочитать объект из текстового потока.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>stream</strong> – Открытый текстовый поток с методом <code class="docutils literal notranslate"><span class="pre">read()</span></code>.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Новый экземпляр класса, восстановленный из потока.</p>
+</dd>
+<dt class="field-odd">Исключение<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – Если содержимое потока не соответствует
+    формату.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.abstract.readable.Readable.from_string">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="../_modules/common/abstract/readable.html#Readable.from_string"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.abstract.readable.Readable.from_string" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Прочитать объект из строки.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> – Строка с текстовым представлением объекта.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Новый экземпляр класса, восстановленный из <code class="docutils literal notranslate"><span class="pre">text</span></code>.</p>
+</dd>
+<dt class="field-odd">Исключение<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – Если строка не соответствует формату.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-common.abstract.writable">Абстрактный интерфейс для записи объекта в текстовый поток.</p>
+<p>Module: common.abstract.writable</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.abstract.writable.Writable">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.abstract.writable.</span></span><span class="sig-name descname"><span class="pre">Writable</span></span><a class="reference internal" href="../_modules/common/abstract/writable.html#Writable"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.abstract.writable.Writable" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Объект, который можно записать в текстовый поток.</p>
+<p>Наследники реализуют <code class="docutils literal notranslate"><span class="pre">__str__</span></code>, а методы <a class="reference internal" href="#common.abstract.writable.Writable.to_stream" title="common.abstract.writable.Writable.to_stream"><code class="xref py py-meth docutils literal notranslate"><span class="pre">to_stream()</span></code></a>
+и <code class="xref py py-meth docutils literal notranslate"><span class="pre">__repr__()</span></code> предоставляются базовым классом.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="common.abstract.writable.Writable.to_stream">
+<span class="sig-name descname"><span class="pre">to_stream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TextIO</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/common/abstract/writable.html#Writable.to_stream"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.abstract.writable.Writable.to_stream" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Записать объект в текстовый поток.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>stream</strong> – Открытый текстовый поток с методом <code class="docutils literal notranslate"><span class="pre">write()</span></code>.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Ничего не возвращает.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-common.domain.address">Адрес.</p>
+<p>Module: common.domain.address</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.domain.address.Address">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.domain.address.</span></span><span class="sig-name descname"><span class="pre">Address</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">country</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">city</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">street</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">building</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">postal_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/domain/address.html#Address"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.domain.address.Address" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Почтовый адрес.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.domain.address.Address._country">
+<span class="sig-name descname"><span class="pre">_country</span></span><a class="headerlink" href="#common.domain.address.Address._country" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Страна.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.domain.address.Address._city">
+<span class="sig-name descname"><span class="pre">_city</span></span><a class="headerlink" href="#common.domain.address.Address._city" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Город.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.domain.address.Address._street">
+<span class="sig-name descname"><span class="pre">_street</span></span><a class="headerlink" href="#common.domain.address.Address._street" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Улица.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.domain.address.Address._building">
+<span class="sig-name descname"><span class="pre">_building</span></span><a class="headerlink" href="#common.domain.address.Address._building" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Номер дома.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.domain.address.Address._postal_code">
+<span class="sig-name descname"><span class="pre">_postal_code</span></span><a class="headerlink" href="#common.domain.address.Address._postal_code" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Почтовый индекс.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="common.domain.address.Address.country">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">country</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#common.domain.address.Address.country" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Страна.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Строка.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="common.domain.address.Address.city">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">city</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#common.domain.address.Address.city" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Город.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Строка.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="common.domain.address.Address.street">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">street</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#common.domain.address.Address.street" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Улица.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Строка.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="common.domain.address.Address.building">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">building</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#common.domain.address.Address.building" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Номер дома.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Строка.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="common.domain.address.Address.postal_code">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">postal_code</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#common.domain.address.Address.postal_code" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Почтовый индекс.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Строка.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.domain.address.Address.full">
+<span class="sig-name descname"><span class="pre">full</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/common/domain/address.html#Address.full"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.domain.address.Address.full" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Вернуть полный адрес одной строкой.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Строка вида <code class="docutils literal notranslate"><span class="pre">&quot;Россия,</span> <span class="pre">Москва,</span> <span class="pre">Тверская,</span> <span class="pre">1,</span> <span class="pre">101000&quot;</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-common.domain.money">Денежная сумма.</p>
+<p>Module: common.domain.money</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.domain.money.Money">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.domain.money.</span></span><span class="sig-name descname"><span class="pre">Money</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">currency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'RUB'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/domain/money.html#Money"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.domain.money.Money" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Денежная сумма с валютой.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.domain.money.Money._amount">
+<span class="sig-name descname"><span class="pre">_amount</span></span><a class="headerlink" href="#common.domain.money.Money._amount" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Величина суммы.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.domain.money.Money._currency">
+<span class="sig-name descname"><span class="pre">_currency</span></span><a class="headerlink" href="#common.domain.money.Money._currency" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Код валюты.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="common.domain.money.Money.amount">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">amount</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#common.domain.money.Money.amount" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Величина суммы.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Число с плавающей точкой.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="common.domain.money.Money.currency">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">currency</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#common.domain.money.Money.currency" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Код валюты.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Строка валюты.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.domain.money.Money.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#common.domain.money.Money" title="common.domain.money.Money"><span class="pre">Money</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#common.domain.money.Money" title="common.domain.money.Money"><span class="pre">Money</span></a></span></span><a class="reference internal" href="../_modules/common/domain/money.html#Money.add"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.domain.money.Money.add" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Сложить две суммы.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> – Другая денежная сумма.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Новая сумма.</p>
+</dd>
+<dt class="field-odd">Исключение<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – Если валюты различаются.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="common.domain.money.Money.multiply">
+<span class="sig-name descname"><span class="pre">multiply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#common.domain.money.Money" title="common.domain.money.Money"><span class="pre">Money</span></a></span></span><a class="reference internal" href="../_modules/common/domain/money.html#Money.multiply"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.domain.money.Money.multiply" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Умножить сумму на коэффициент.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>factor</strong> – Множитель.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Новая сумма.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-common.enums.order_status">Статус заказа на производство.</p>
+<p>Module: common.enums.order_status</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.enums.order_status.OrderStatus">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.enums.order_status.</span></span><span class="sig-name descname"><span class="pre">OrderStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/enums/order_status.html#OrderStatus"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.enums.order_status.OrderStatus" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Статус заказа на производство.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.order_status.OrderStatus.NEW">
+<span class="sig-name descname"><span class="pre">NEW</span></span><a class="headerlink" href="#common.enums.order_status.OrderStatus.NEW" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Заказ создан, но не запущен.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.order_status.OrderStatus.IN_PROGRESS">
+<span class="sig-name descname"><span class="pre">IN_PROGRESS</span></span><a class="headerlink" href="#common.enums.order_status.OrderStatus.IN_PROGRESS" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Заказ в производстве.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.order_status.OrderStatus.COMPLETED">
+<span class="sig-name descname"><span class="pre">COMPLETED</span></span><a class="headerlink" href="#common.enums.order_status.OrderStatus.COMPLETED" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Заказ выполнен.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.order_status.OrderStatus.SHIPPED">
+<span class="sig-name descname"><span class="pre">SHIPPED</span></span><a class="headerlink" href="#common.enums.order_status.OrderStatus.SHIPPED" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Заказ отгружен клиенту.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.order_status.OrderStatus.CANCELLED">
+<span class="sig-name descname"><span class="pre">CANCELLED</span></span><a class="headerlink" href="#common.enums.order_status.OrderStatus.CANCELLED" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Заказ отменён.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">NEW</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'new'</span></span><a class="headerlink" href="#id0" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">IN_PROGRESS</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'in_progress'</span></span><a class="headerlink" href="#id2" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">COMPLETED</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'completed'</span></span><a class="headerlink" href="#id3" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">SHIPPED</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'shipped'</span></span><a class="headerlink" href="#id4" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">CANCELLED</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cancelled'</span></span><a class="headerlink" href="#id5" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p id="module-common.enums.part_type">Тип детали.</p>
+<p>Module: common.enums.part_type</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.enums.part_type.PartType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.enums.part_type.</span></span><span class="sig-name descname"><span class="pre">PartType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/enums/part_type.html#PartType"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.enums.part_type.PartType" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Категория автомобильной детали.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.part_type.PartType.PISTON">
+<span class="sig-name descname"><span class="pre">PISTON</span></span><a class="headerlink" href="#common.enums.part_type.PartType.PISTON" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Поршень.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.part_type.PartType.CYLINDER">
+<span class="sig-name descname"><span class="pre">CYLINDER</span></span><a class="headerlink" href="#common.enums.part_type.PartType.CYLINDER" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Цилиндр.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.part_type.PartType.SHAFT">
+<span class="sig-name descname"><span class="pre">SHAFT</span></span><a class="headerlink" href="#common.enums.part_type.PartType.SHAFT" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Вал.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.part_type.PartType.GEAR">
+<span class="sig-name descname"><span class="pre">GEAR</span></span><a class="headerlink" href="#common.enums.part_type.PartType.GEAR" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Шестерня.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.part_type.PartType.BEARING">
+<span class="sig-name descname"><span class="pre">BEARING</span></span><a class="headerlink" href="#common.enums.part_type.PartType.BEARING" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Подшипник.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">PISTON</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'piston'</span></span><a class="headerlink" href="#id6" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">CYLINDER</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cylinder'</span></span><a class="headerlink" href="#id7" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">SHAFT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'shaft'</span></span><a class="headerlink" href="#id8" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">GEAR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gear'</span></span><a class="headerlink" href="#id9" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">BEARING</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bearing'</span></span><a class="headerlink" href="#id10" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p id="module-common.enums.material_type">Тип материала.</p>
+<p>Module: common.enums.material_type</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.enums.material_type.MaterialType">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.enums.material_type.</span></span><span class="sig-name descname"><span class="pre">MaterialType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/enums/material_type.html#MaterialType"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.enums.material_type.MaterialType" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Категория материала.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.material_type.MaterialType.STEEL">
+<span class="sig-name descname"><span class="pre">STEEL</span></span><a class="headerlink" href="#common.enums.material_type.MaterialType.STEEL" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Сталь.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.material_type.MaterialType.ALUMINUM">
+<span class="sig-name descname"><span class="pre">ALUMINUM</span></span><a class="headerlink" href="#common.enums.material_type.MaterialType.ALUMINUM" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Алюминий.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.material_type.MaterialType.PLASTIC">
+<span class="sig-name descname"><span class="pre">PLASTIC</span></span><a class="headerlink" href="#common.enums.material_type.MaterialType.PLASTIC" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Пластик.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id11">
+<span class="sig-name descname"><span class="pre">STEEL</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'steel'</span></span><a class="headerlink" href="#id11" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id12">
+<span class="sig-name descname"><span class="pre">ALUMINUM</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'aluminum'</span></span><a class="headerlink" href="#id12" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id13">
+<span class="sig-name descname"><span class="pre">PLASTIC</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'plastic'</span></span><a class="headerlink" href="#id13" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p id="module-common.enums.equipment_status">Статус оборудования.</p>
+<p>Module: common.enums.equipment_status</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="common.enums.equipment_status.EquipmentStatus">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.enums.equipment_status.</span></span><span class="sig-name descname"><span class="pre">EquipmentStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/enums/equipment_status.html#EquipmentStatus"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.enums.equipment_status.EquipmentStatus" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Состояние единицы оборудования.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.equipment_status.EquipmentStatus.WORKING">
+<span class="sig-name descname"><span class="pre">WORKING</span></span><a class="headerlink" href="#common.enums.equipment_status.EquipmentStatus.WORKING" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Работает.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.equipment_status.EquipmentStatus.IDLE">
+<span class="sig-name descname"><span class="pre">IDLE</span></span><a class="headerlink" href="#common.enums.equipment_status.EquipmentStatus.IDLE" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Простаивает.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.equipment_status.EquipmentStatus.BROKEN">
+<span class="sig-name descname"><span class="pre">BROKEN</span></span><a class="headerlink" href="#common.enums.equipment_status.EquipmentStatus.BROKEN" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Сломано.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.enums.equipment_status.EquipmentStatus.MAINTENANCE">
+<span class="sig-name descname"><span class="pre">MAINTENANCE</span></span><a class="headerlink" href="#common.enums.equipment_status.EquipmentStatus.MAINTENANCE" title="Ссылка на это определение">¶</a></dt>
+<dd><p>На обслуживании.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id14">
+<span class="sig-name descname"><span class="pre">WORKING</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'working'</span></span><a class="headerlink" href="#id14" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id15">
+<span class="sig-name descname"><span class="pre">IDLE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'idle'</span></span><a class="headerlink" href="#id15" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id16">
+<span class="sig-name descname"><span class="pre">BROKEN</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'broken'</span></span><a class="headerlink" href="#id16" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id17">
+<span class="sig-name descname"><span class="pre">MAINTENANCE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'maintenance'</span></span><a class="headerlink" href="#id17" title="Ссылка на это определение">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<p id="module-common.exceptions">Все исключения предметной области.</p>
+<p>Module: common.exceptions</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.EmployeeNotAvailableException">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">EmployeeNotAvailableException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/employee_exceptions.html#EmployeeNotAvailableException"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.EmployeeNotAvailableException" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.FactoryException" title="common.exceptions.base.FactoryException"><code class="xref py py-class docutils literal notranslate"><span class="pre">FactoryException</span></code></a></p>
+<p>Сотрудник недоступен (отпуск, больничный).</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.EquipmentBrokenException">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">EquipmentBrokenException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/equipment_exceptions.html#EquipmentBrokenException"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.EquipmentBrokenException" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.FactoryException" title="common.exceptions.base.FactoryException"><code class="xref py py-class docutils literal notranslate"><span class="pre">FactoryException</span></code></a></p>
+<p>Оборудование сломано.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.EquipmentNotAvailableException">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">EquipmentNotAvailableException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/equipment_exceptions.html#EquipmentNotAvailableException"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.EquipmentNotAvailableException" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.FactoryException" title="common.exceptions.base.FactoryException"><code class="xref py py-class docutils literal notranslate"><span class="pre">FactoryException</span></code></a></p>
+<p>Оборудование занято или недоступно.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.FactoryException">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">FactoryException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/base.html#FactoryException"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.FactoryException" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Базовое исключение всех модулей проекта.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="common.exceptions.FactoryException.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#common.exceptions.FactoryException.message" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Текст сообщения об ошибке.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.InsufficientMaterialException">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">InsufficientMaterialException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/material_exceptions.html#InsufficientMaterialException"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.InsufficientMaterialException" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.FactoryException" title="common.exceptions.base.FactoryException"><code class="xref py py-class docutils literal notranslate"><span class="pre">FactoryException</span></code></a></p>
+<p>Недостаточно материала на складе.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.InvalidMaterialException">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">InvalidMaterialException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/material_exceptions.html#InvalidMaterialException"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.InvalidMaterialException" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.FactoryException" title="common.exceptions.base.FactoryException"><code class="xref py py-class docutils literal notranslate"><span class="pre">FactoryException</span></code></a></p>
+<p>Некорректные данные материала.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.InvalidOrderException">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">InvalidOrderException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/order_exceptions.html#InvalidOrderException"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.InvalidOrderException" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.FactoryException" title="common.exceptions.base.FactoryException"><code class="xref py py-class docutils literal notranslate"><span class="pre">FactoryException</span></code></a></p>
+<p>Некорректные данные заказа.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.InvalidPartException">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">InvalidPartException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/part_exceptions.html#InvalidPartException"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.InvalidPartException" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.FactoryException" title="common.exceptions.base.FactoryException"><code class="xref py py-class docutils literal notranslate"><span class="pre">FactoryException</span></code></a></p>
+<p>Некорректные данные детали.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.InvalidSpecificationException">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">InvalidSpecificationException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/part_exceptions.html#InvalidSpecificationException"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.InvalidSpecificationException" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.FactoryException" title="common.exceptions.base.FactoryException"><code class="xref py py-class docutils literal notranslate"><span class="pre">FactoryException</span></code></a></p>
+<p>Некорректная спецификация детали.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.OrderNotFoundException">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">OrderNotFoundException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/order_exceptions.html#OrderNotFoundException"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.OrderNotFoundException" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.FactoryException" title="common.exceptions.base.FactoryException"><code class="xref py py-class docutils literal notranslate"><span class="pre">FactoryException</span></code></a></p>
+<p>Заказ не найден.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.ProductionDeadlineMissedException">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">ProductionDeadlineMissedException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/order_exceptions.html#ProductionDeadlineMissedException"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.ProductionDeadlineMissedException" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.FactoryException" title="common.exceptions.base.FactoryException"><code class="xref py py-class docutils literal notranslate"><span class="pre">FactoryException</span></code></a></p>
+<p>Срок производства заказа пропущен.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="common.exceptions.QualityControlFailedException">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">common.exceptions.</span></span><span class="sig-name descname"><span class="pre">QualityControlFailedException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/common/exceptions/part_exceptions.html#QualityControlFailedException"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#common.exceptions.QualityControlFailedException" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#common.exceptions.FactoryException" title="common.exceptions.base.FactoryException"><code class="xref py py-class docutils literal notranslate"><span class="pre">FactoryException</span></code></a></p>
+<p>Деталь не прошла контроль качества.</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">PPOIS Lab 2</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+<p class="caption" role="heading"><span class="caption-text">Содержание</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Общий код</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#common.abstract.readable.Readable"><code class="docutils literal notranslate"><span class="pre">Readable</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.abstract.writable.Writable"><code class="docutils literal notranslate"><span class="pre">Writable</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.domain.address.Address"><code class="docutils literal notranslate"><span class="pre">Address</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.domain.money.Money"><code class="docutils literal notranslate"><span class="pre">Money</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.enums.order_status.OrderStatus"><code class="docutils literal notranslate"><span class="pre">OrderStatus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.enums.part_type.PartType"><code class="docutils literal notranslate"><span class="pre">PartType</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.enums.material_type.MaterialType"><code class="docutils literal notranslate"><span class="pre">MaterialType</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.enums.equipment_status.EquipmentStatus"><code class="docutils literal notranslate"><span class="pre">EquipmentStatus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.EmployeeNotAvailableException"><code class="docutils literal notranslate"><span class="pre">EmployeeNotAvailableException</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.EquipmentBrokenException"><code class="docutils literal notranslate"><span class="pre">EquipmentBrokenException</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.EquipmentNotAvailableException"><code class="docutils literal notranslate"><span class="pre">EquipmentNotAvailableException</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.FactoryException"><code class="docutils literal notranslate"><span class="pre">FactoryException</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.InsufficientMaterialException"><code class="docutils literal notranslate"><span class="pre">InsufficientMaterialException</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.InvalidMaterialException"><code class="docutils literal notranslate"><span class="pre">InvalidMaterialException</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.InvalidOrderException"><code class="docutils literal notranslate"><span class="pre">InvalidOrderException</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.InvalidPartException"><code class="docutils literal notranslate"><span class="pre">InvalidPartException</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.InvalidSpecificationException"><code class="docutils literal notranslate"><span class="pre">InvalidSpecificationException</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.OrderNotFoundException"><code class="docutils literal notranslate"><span class="pre">OrderNotFoundException</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.ProductionDeadlineMissedException"><code class="docutils literal notranslate"><span class="pre">ProductionDeadlineMissedException</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common.exceptions.QualityControlFailedException"><code class="docutils literal notranslate"><span class="pre">QualityControlFailedException</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="factory.html">Домен завода</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="предыдущая глава">PPOIS Lab 2</a></li>
+      <li>Next: <a href="factory.html" title="следующая глава">Домен завода</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2026.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../_sources/api/common.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
